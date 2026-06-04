@@ -11,10 +11,10 @@ WordPressコーディング用テンプレートリポジトリです。
 
 ```bash
 # フル版
-git clone git@github.com:Takamoto29/template-wp.git
+git clone git@github.com:eeyan-corp/template-wp.git
 
 # シンプル版
-git clone -b minimal git@github.com:Takamoto29/template-wp.git
+git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 ```
 
 ---
