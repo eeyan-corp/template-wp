@@ -1,0 +1,38 @@
+{
+  "name": "al-template-webpack",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "webpack --config webpack.dev.js",
+    "watch": "webpack --config webpack.dev.js --watch",
+    "webp": "node webp.js",
+    "css-minify": "webpack --config webpack.css.minify.js",
+    "image-minify": "webpack --config webpack.image.minify.js"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "copy-webpack-plugin": "^14.0.0",
+    "css-loader": "^7.1.4",
+    "css-minimizer-webpack-plugin": "^8.0.0",
+    "image-minimizer-webpack-plugin": "^5.0.0",
+    "mini-css-extract-plugin": "^2.9.2",
+    "postcss": "^8.4.49",
+    "postcss-loader": "^8.2.1",
+    "prettier": "^3.8.1",
+    "sass": "^1.83.4",
+    "sass-loader": "^16.0.7",
+    "sharp": "^0.33.5",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^7.0.2",
+    "webpack-fix-style-only-entries": "^0.6.1",
+    "webpack-merge": "^6.0.1"
+  },
+  "browserslist": [
+    "> 3% in JP",
+    "last 2 versions",
+    "not dead"
+  ],
+  "volta": {
+    "node": "20.20.2",
+    "npm": "10.8.2"
+  }
+}
