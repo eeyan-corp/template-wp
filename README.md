@@ -21,7 +21,9 @@ git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 
 ## セットアップ
 
-### 1. WordPress本体の配置
+### A. 通常環境（WP手動インストール）
+
+#### 1. WordPress本体の配置
 
 [WordPress公式](https://ja.wordpress.org/download/)からZIPをダウンロードし、展開したファイルを `wp/` ディレクトリに配置します。
 
@@ -34,7 +36,7 @@ wp/
 └── ...
 ```
 
-### 2. wp-config.php の作成
+#### 2. wp-config.php の作成
 
 `wp/wp-config-sample.php` をコピーして `wp/wp-config.php` を作成し、DB情報を設定します。
 
@@ -45,15 +47,67 @@ define( 'DB_PASSWORD', 'パスワード' );
 define( 'DB_HOST', 'localhost' );
 ```
 
-### 3. WordPressのインストール
+#### 3. WordPressのインストール
 
 ブラウザで `http://localhost/wp/wp-admin/install.php` にアクセスし、インストールを完了させます。
 
-### 4. テーマの有効化
+#### 4. テーマの有効化
 
 WordPress管理画面 → 外観 → テーマ から `base` テーマを有効化します。
 
-### 5. npm パッケージのインストール
+#### 5. npm パッケージのインストール
+
+```bash
+cd dev
+npm install
+```
+
+---
+
+### B. Local Sites を使用する場合
+
+#### 1. Local で新規サイト作成
+
+Local でサイトを作成します。WPが `app/public/` 直下に自動インストールされます。
+
+#### 2. WPファイルを `wp/` フォルダに移動
+
+```bash
+cd app/public
+mkdir wp
+mv wp-admin wp-includes wp-*.php xmlrpc.php wp-content wp/
+```
+
+#### 3. データベースの siteurl を更新
+
+Local の Adminer で `wp_options` テーブルを開き、`siteurl` の値を以下に変更します。
+
+```
+http://サイト名.local/wp
+```
+
+#### 4. `wp/wp-content/` を削除
+
+テンプレートのテーマ・プラグインに置き換えるため削除します。
+
+```bash
+rm -rf wp/wp-content/
+```
+
+#### 5. テンプレートをclone
+
+```bash
+git init
+git remote add origin git@github.com:eeyan-corp/template-wp.git
+git fetch origin main
+git checkout main
+```
+
+#### 6. テーマ・プラグインの有効化
+
+WordPress管理画面 → 外観 → テーマ から `base` テーマを有効化します。
+
+#### 7. npm パッケージのインストール
 
 ```bash
 cd dev
