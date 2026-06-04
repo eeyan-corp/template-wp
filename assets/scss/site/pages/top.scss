@@ -1,8 +1,5 @@
-@use "../../base/shortcut-functions" as f;
-@use "../modules" as modules;
-
 #top {
 }
 
-@include f.mq(sp) {
+@media (max-width: 768px) {
 }
