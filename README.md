@@ -33,21 +33,21 @@ git clone -b minimal git@github.com:eeyan-corp/template-wp.git
  ├── index.php
  ├── .htaccess
  ├── assets/
- │   ├── css/                           # コンパイル後のCSS（自動生成）
+ │   ├── css/                                # コンパイル後のCSS（自動生成）
  │   ├── scss/
  │   │   ├── styles.scss
-+│   │   ├── base/                      # レスポンシブmixin・リセットCSS
-+│   │   │   ├── shortcut-functions.scss # mixin・関数のエクスポート
-+│   │   │   ├── index.scss              # 表示制御クラス生成
++│   │   ├── base/                           # レスポンシブmixin・リセットCSS
++│   │   │   ├── shortcut-functions.scss     # mixin・関数のエクスポート
++│   │   │   ├── index.scss                  # 表示制御クラス生成
 +│   │   │   └── libs/
-+│   │   │       ├── reset.scss          # リセットCSS（destyle.css）
-+│   │   │       ├── responsive.scss     # メディアクエリmixin
++│   │   │       ├── reset.scss              # リセットCSS（destyle.css）
++│   │   │       ├── responsive.scss         # メディアクエリmixin
 +│   │   │       └── rem-base-font-size.scss # rem基準フォントサイズ設定
- │   │   └── site/                      # 案件ごとに編集するファイル
-+│   │       ├── variables.scss          # ブレイクポイント・基準幅設定
- │   │       ├── common.scss             # 共通スタイル・カスタムプロパティ
-+│   │       ├── modules/                # 共通mixin
-+│   │       │   └── hover.scss          # ホバー・フォーカスmixin
+ │   │   └── site/                           # 案件ごとに編集するファイル
++│   │       ├── variables.scss              # ブレイクポイント・基準幅設定
+ │   │       ├── common.scss                 # 共通スタイル・カスタムプロパティ
++│   │       ├── modules/                    # 共通mixin
++│   │       │   └── hover.scss              # ホバー・フォーカスmixin
  │   │       ├── parts/
  │   │       │   ├── header.scss
  │   │       │   └── footer.scss
@@ -58,24 +58,24 @@ git clone -b minimal git@github.com:eeyan-corp/template-wp.git
  │   └── images/
  │       ├── common/
  │       └── top/
- ├── dev/              # ビルドツール（webpack）
+ ├── dev/                                    # ビルドツール（webpack）
  └── wp/
      └── wp-content/
          ├── themes/
          │   └── base/
-         │       ├── front-page.php    # トップページテンプレート
-         │       ├── index.php         # フォールバックテンプレート
-         │       ├── style.css         # テーマ情報
-         │       ├── functions.php     # テーマ関数・設定
+         │       ├── front-page.php          # トップページテンプレート
+         │       ├── index.php               # フォールバックテンプレート
+         │       ├── style.css               # テーマ情報
+         │       ├── functions.php           # テーマ関数・設定
          │       ├── inc/
-         │       │   ├── admin.php     # 管理画面カスタマイズ
-         │       │   └── post-types.php # カスタム投稿タイプ
+         │       │   ├── admin.php           # 管理画面カスタマイズ
+         │       │   └── post-types.php      # カスタム投稿タイプ
          │       ├── parts/
-         │       │   ├── head.php      # headタグ・CSS読み込み
+         │       │   ├── head.php            # headタグ・CSS読み込み
          │       │   ├── header.php
          │       │   ├── footer.php
-         │       │   └── scripts.php   # JS読み込み
-         │       └── acf-json/         # ACFフィールドグループ保存先
+         │       │   └── scripts.php         # JS読み込み
+         │       └── acf-json/               # ACFフィールドグループ保存先
          └── plugins/
 ```
 
