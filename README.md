@@ -24,7 +24,7 @@ git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 
 ---
 
-## ディレクトリ構成
+## ファイル構成
 
 > 緑色の行は `main` ブランチのみ含まれるファイル・ディレクトリ
 
