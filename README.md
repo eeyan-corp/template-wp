@@ -116,8 +116,7 @@ npm i
 
 ```bash
 cd dev
-npm run watch      # SCSS監視・自動コンパイル（開発時）
-npm run css-minify # CSS minify（本番用）
+npm run watch        # SCSS監視・自動コンパイル／minify（開発時）
 npm run image-minify # 画像圧縮（JPG/PNG）
 npm run webp       # WebP変換
 ```

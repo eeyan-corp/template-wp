@@ -1,6 +1,7 @@
 const path = require("path"); // pathモジュールの読み込み
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 // production モード以外の場合、変数 enabledSourceMap は true
 // 本番環境のときはsoucemapを出力させない設定
@@ -72,6 +73,10 @@ module.exports = {
       filename: "[name].css", // 出力ファイル名を相対パスで指定（[name]にはentry:で指定したstylesが入る）
     }),
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [new CssMinimizerPlugin()],
+  },
   // ▼production モード以外の場合は source-map タイプのソースマップを出力
   devtool: enabledSourceMap ? "source-map" : "eval",
   // 監視（watch）対象から除外するファイル
