@@ -5,7 +5,7 @@ WordPressコーディング用テンプレートリポジトリです。
 ## ブランチ
 
 使用するブランチをどちらか選んでリポジトリを作成してください。
-「Use this template」を使う場合、デフォルトは `main` ブランチが選択されます。`minimal` を使用するときは「Include all branches」を **On** にしてください。
+テンプレートを使用する場合、デフォルトは `main` ブランチが選択されます。`minimal` を使用するときは「Include all branches」を **On** にしてください。
 
 | ブランチ  | 概要                                                                                               |
 | --------- | -------------------------------------------------------------------------------------------------- |
@@ -20,7 +20,7 @@ git clone git@github.com:eeyan-corp/template-wp.git
 git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 ```
 
-> ⚠️ リポジトリ作成後に表示される以下のバナーは無視してください。`minimal` を `main` へ**マージしないでください。**
+> ⚠️ リポジトリ作成後に表示される以下のバナーは無視してください。
 >
 > ![minimal PR banner](docs/minimal-pr-banner.png)
 
@@ -90,7 +90,7 @@ npm i
 
 ### B. 通常環境
 
-1. テンプレートをclone後、WP本体を `wp/` に配置・インストール（`wp-content/` はすでに存在するため上書き不要）
+1. テンプレートをcloneし展開後、WP本体を `wp/` に配置・インストール（`wp-content/` はすでに存在するため上書き不要）
 2. 管理画面 → 外観 → テーマ から `base` を有効化
 3. npm パッケージをインストール
 
