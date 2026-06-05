@@ -5,7 +5,6 @@
     "dev": "webpack --config webpack.dev.js",
     "watch": "webpack --config webpack.dev.js --watch",
     "webp": "node webp.js",
-    "css-minify": "webpack --config webpack.css.minify.js",
     "image-minify": "webpack --config webpack.image.minify.js"
   },
   "devDependencies": {
