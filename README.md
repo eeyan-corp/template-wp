@@ -4,97 +4,120 @@ WordPressコーディング用テンプレートリポジトリです。
 
 ## ブランチ
 
-| ブランチ | 概要 |
-|----------|------|
-| `main` | フル版。レスポンシブmixin・rem換算・表示制御クラスあり |
-| `minimal` | シンプル版。SCSSのベース機能なし、メディアクエリは直書き |
+使用するブランチをどちらか選んでリポジトリを作成してください。
+テンプレートを使用する場合、デフォルトは `main` ブランチが選択されます。`minimal` を使用するときは「Include all branches」を **On** にしてください。
+
+| ブランチ  | 概要                                                                                               |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| `main`    | フル版。レスポンシブmixin・rem換算・表示制御クラスあり                                             |
+| `minimal` | シンプル版。SCSSのベース機能なし、メディアクエリは直書き。独自のSCSS構成にカスタマイズしたい方向け |
 
 ```bash
 # フル版
-git clone git@github.com:Takamoto29/template-wp.git
+git clone git@github.com:eeyan-corp/template-wp.git
 
 # シンプル版
-git clone -b minimal git@github.com:Takamoto29/template-wp.git
+git clone -b minimal git@github.com:eeyan-corp/template-wp.git
+```
+
+> ⚠️ リポジトリ作成後に「Compare & pull request」バナーが表示されますが無視してください。`minimal` を `main` へ**マージしないでください。**
+
+---
+
+## ファイル構成
+
+> 緑色の行は `main` ブランチのみ含まれるファイル・ディレクトリ
+
+```diff
+ root/
+ ├── index.php
+ ├── .htaccess
+ ├── assets/
+ │   ├── css/                           # コンパイル後のCSS（自動生成）
+ │   ├── scss/
+ │   │   ├── styles.scss
++│   │   ├── base/                      # レスポンシブmixin・リセットCSS
++│   │   │   ├── shortcut-functions.scss # mixin・関数のエクスポート
++│   │   │   ├── index.scss              # 表示制御クラス生成
++│   │   │   └── libs/
++│   │   │       ├── reset.scss          # リセットCSS（destyle.css）
++│   │   │       ├── responsive.scss     # メディアクエリmixin
++│   │   │       └── rem-base-font-size.scss # rem基準フォントサイズ設定
+ │   │   └── site/                      # 案件ごとに編集するファイル
++│   │       ├── variables.scss          # ブレイクポイント・基準幅設定
+ │   │       ├── common.scss             # 共通スタイル・カスタムプロパティ
++│   │       ├── modules/                # 共通mixin
++│   │       │   └── hover.scss          # ホバー・フォーカスmixin
+ │   │       ├── parts/
+ │   │       │   ├── header.scss
+ │   │       │   └── footer.scss
+ │   │       └── pages/
+ │   │           └── top.scss
+ │   ├── js/
+ │   │   └── script.js
+ │   └── images/
+ │       ├── common/
+ │       └── top/
+ ├── dev/              # ビルドツール（webpack）
+ └── wp/
+     └── wp-content/
+         ├── themes/
+         │   └── base/
+         │       ├── front-page.php    # トップページテンプレート
+         │       ├── index.php         # フォールバックテンプレート
+         │       ├── style.css         # テーマ情報
+         │       ├── functions.php     # テーマ関数・設定
+         │       ├── inc/
+         │       │   ├── admin.php     # 管理画面カスタマイズ
+         │       │   └── post-types.php # カスタム投稿タイプ
+         │       ├── parts/
+         │       │   ├── head.php      # headタグ・CSS読み込み
+         │       │   ├── header.php
+         │       │   ├── footer.php
+         │       │   └── scripts.php   # JS読み込み
+         │       └── acf-json/         # ACFフィールドグループ保存先
+         └── plugins/
 ```
 
 ---
 
 ## セットアップ
 
-### 1. WordPress本体の配置
+### A. Local Sites を使用する場合
 
-[WordPress公式](https://ja.wordpress.org/download/)からZIPをダウンロードし、展開したファイルを `wp/` ディレクトリに配置します。
-
-```
-wp/
-├── wp-admin/       ← 配置
-├── wp-includes/    ← 配置
-├── wp-content/     ← すでに存在（上書き不要）
-├── index.php       ← 配置
-└── ...
-```
-
-### 2. wp-config.php の作成
-
-`wp/wp-config-sample.php` をコピーして `wp/wp-config.php` を作成し、DB情報を設定します。
-
-```php
-define( 'DB_NAME', 'データベース名' );
-define( 'DB_USER', 'ユーザー名' );
-define( 'DB_PASSWORD', 'パスワード' );
-define( 'DB_HOST', 'localhost' );
-```
-
-### 3. WordPressのインストール
-
-ブラウザで `http://localhost/wp/wp-admin/install.php` にアクセスし、インストールを完了させます。
-
-### 4. テーマの有効化
-
-WordPress管理画面 → 外観 → テーマ から `base` テーマを有効化します。
-
-### 5. npm パッケージのインストール
+1. Local でサイトを作成
+2. `app/public/` 直下のWPファイルを `wp/` を作成し移動
+3. DBの `siteurl` を `http://localhost:〇〇〇〇〇/wp` に更新
+4. `app/public/` 内でcloneしテンプレートを展開。`wp/wp-content/` はテンプレートの `wp-content/` に差し替え
+5. 管理画面 → 外観 → テーマ から `base` を有効化
+6. npm パッケージをインストール
 
 ```bash
 cd dev
-npm install
+npm i
 ```
 
 ---
 
-## 開発
+### B. 通常環境
+
+1. テンプレートをcloneし展開後、WP本体を `wp/` に配置・インストール（`wp-content/` はすでに存在するため上書き不要）
+2. 管理画面 → 外観 → テーマ から `base` を有効化
+3. npm パッケージをインストール
 
 ```bash
 cd dev
-npm run watch      # SCSS監視ビルド（開発時）
+npm i
+```
+
+---
+
+## 開発時に使えるコマンド一覧
+
+```bash
+cd dev
+npm run watch      # SCSS監視・自動コンパイル（開発時）
 npm run css-minify # CSS minify（本番用）
 npm run image-minify # 画像圧縮（JPG/PNG）
 npm run webp       # WebP変換
-```
-
----
-
-## ディレクトリ構成
-
-```
-root/
-├── index.php
-├── .htaccess
-├── assets/
-│   ├── css/          # コンパイル後のCSS（自動生成）
-│   ├── scss/
-│   │   ├── styles.scss
-│   │   ├── base/     # レスポンシブmixin等（main のみ）
-│   │   └── site/     # 案件ごとに編集するファイル
-│   ├── js/
-│   │   └── script.js
-│   └── images/
-│       ├── common/
-│       └── top/
-├── dev/              # ビルドツール（webpack）
-└── wp/
-    └── wp-content/
-        ├── themes/
-        │   └── base/ # テンプレートテーマ
-        └── plugins/
 ```
