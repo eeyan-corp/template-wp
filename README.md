@@ -9,6 +9,8 @@ WordPressコーディング用テンプレートリポジトリです。
 | `main` | フル版。レスポンシブmixin・rem換算・表示制御クラスあり |
 | `minimal` | シンプル版。SCSSのベース機能なし、メディアクエリは直書き |
 
+使用するブランチをどちらか選んでリポジトリを作成してください。
+
 ```bash
 # フル版
 git clone git@github.com:eeyan-corp/template-wp.git
@@ -17,12 +19,9 @@ git clone git@github.com:eeyan-corp/template-wp.git
 git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 ```
 
-> **Include all branches** について
-> - **Off**（デフォルト）: `main` ブランチのみコピーされます
-> - **On**: `main` + `minimal` 両ブランチがコピーされます
->
-> `minimal` ブランチが不要な場合は Off のままで構いません。
-> On にすると以下のバナーが表示されますが、`minimal` を `main` へ**マージしないでください。**
+「Use this template」を使う場合、`minimal` を使用するときは「Include all branches」を **On** にしてください。
+
+> ⚠️ リポジトリ作成後に表示される以下のバナーは無視してください。`minimal` を `main` へ**マージしないでください。**
 >
 > ![minimal PR banner](docs/minimal-pr-banner.png)
 
