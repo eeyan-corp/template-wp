@@ -20,9 +20,7 @@ git clone git@github.com:eeyan-corp/template-wp.git
 git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 ```
 
-> ⚠️ リポジトリ作成後に表示される以下のバナーは無視してください。
->
-> ![minimal PR banner](docs/minimal-pr-banner.png)
+> ⚠️ リポジトリ作成後に「Compare & pull request」バナーが表示されますが無視してください。`minimal` を `main` へ**マージしないでください。**
 
 ---
 
