@@ -91,7 +91,7 @@ npm run webp       # WebP変換
 
 ## ディレクトリ構成
 
-> 🟠 = `main` ブランチのみ含まれるファイル・ディレクトリ
+> `[main]` = `main` ブランチのみ含まれるファイル・ディレクトリ
 
 ```
 root/
@@ -101,18 +101,18 @@ root/
 │   ├── css/                           # コンパイル後のCSS（自動生成）
 │   ├── scss/
 │   │   ├── styles.scss
-│   │   ├── base/                      # 🟠 レスポンシブmixin・リセットCSS
-│   │   │   ├── shortcut-functions.scss # 🟠 mixin・関数のエクスポート
-│   │   │   ├── index.scss              # 🟠 表示制御クラス生成
+│   │   ├── base/                      # [main] レスポンシブmixin・リセットCSS
+│   │   │   ├── shortcut-functions.scss # [main] mixin・関数のエクスポート
+│   │   │   ├── index.scss              # [main] 表示制御クラス生成
 │   │   │   └── libs/
-│   │   │       ├── reset.scss          # 🟠 リセットCSS（destyle.css）
-│   │   │       ├── responsive.scss     # 🟠 メディアクエリmixin
-│   │   │       └── rem-base-font-size.scss # 🟠 rem基準フォントサイズ設定
+│   │   │       ├── reset.scss          # [main] リセットCSS（destyle.css）
+│   │   │       ├── responsive.scss     # [main] メディアクエリmixin
+│   │   │       └── rem-base-font-size.scss # [main] rem基準フォントサイズ設定
 │   │   └── site/                      # 案件ごとに編集するファイル
-│   │       ├── variables.scss          # 🟠 ブレイクポイント・基準幅設定
+│   │       ├── variables.scss          # [main] ブレイクポイント・基準幅設定
 │   │       ├── common.scss             # 共通スタイル・カスタムプロパティ
-│   │       ├── modules/                # 🟠 共通mixin
-│   │       │   └── hover.scss          # 🟠 ホバー・フォーカスmixin
+│   │       ├── modules/                # [main] 共通mixin
+│   │       │   └── hover.scss          # [main] ホバー・フォーカスmixin
 │   │       ├── parts/
 │   │       │   ├── header.scss
 │   │       │   └── footer.scss
