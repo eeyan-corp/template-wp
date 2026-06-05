@@ -91,16 +91,33 @@ npm run webp       # WebP変換
 
 ## ディレクトリ構成
 
+> 🟠 = `main` ブランチのみ含まれるファイル・ディレクトリ
+
 ```
 root/
 ├── index.php
 ├── .htaccess
 ├── assets/
-│   ├── css/          # コンパイル後のCSS（自動生成）
+│   ├── css/                           # コンパイル後のCSS（自動生成）
 │   ├── scss/
 │   │   ├── styles.scss
-│   │   ├── base/     # レスポンシブmixin等（main のみ）
-│   │   └── site/     # 案件ごとに編集するファイル
+│   │   ├── base/                      # 🟠 レスポンシブmixin・リセットCSS
+│   │   │   ├── shortcut-functions.scss # 🟠 mixin・関数のエクスポート
+│   │   │   ├── index.scss              # 🟠 表示制御クラス生成
+│   │   │   └── libs/
+│   │   │       ├── reset.scss          # 🟠 リセットCSS（destyle.css）
+│   │   │       ├── responsive.scss     # 🟠 メディアクエリmixin
+│   │   │       └── rem-base-font-size.scss # 🟠 rem基準フォントサイズ設定
+│   │   └── site/                      # 案件ごとに編集するファイル
+│   │       ├── variables.scss          # 🟠 ブレイクポイント・基準幅設定
+│   │       ├── common.scss             # 共通スタイル・カスタムプロパティ
+│   │       ├── modules/                # 🟠 共通mixin
+│   │       │   └── hover.scss          # 🟠 ホバー・フォーカスmixin
+│   │       ├── parts/
+│   │       │   ├── header.scss
+│   │       │   └── footer.scss
+│   │       └── pages/
+│   │           └── top.scss
 │   ├── js/
 │   │   └── script.js
 │   └── images/
