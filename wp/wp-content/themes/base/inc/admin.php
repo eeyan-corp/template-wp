@@ -19,10 +19,5 @@ add_action("admin_menu", function(){
     // "options-general.php",    // 設定
   ];
 
-  $subpages = [
-    // ["options-general.php", ""],
-  ];
-
   foreach($pages as $page) remove_menu_page($page);
-  foreach($subpages as $page) remove_submenu_page($page[0], $page[1]);
 });
