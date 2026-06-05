@@ -74,10 +74,14 @@ git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 
 1. WP本体を `wp/` に配置・インストール（`wp-content/` はすでに存在するため上書き不要）
 
-   > **Local Sites の場合：** サイト作成後、`app/public/` 直下のWPファイルを `wp/` に移動し、DBの `siteurl` を `http://localhost:〇〇〇/wp` に更新。`wp/wp-content/` を削除後、cloneしてテンプレートのものに差し替えてください。
+   > **【Local Sites の場合】**
+   >
+   > 1. サイト作成後、`app/public/` 直下のWPファイルを `wp/` を作成し移動。
+   > 2. cloneしテンプレートを展開。`wp/wp-content/` はcloneしたテンプレートの `wp-content/` に差し替え。
 
-2. 管理画面 → 外観 → テーマ から `base` を有効化
-3. npm パッケージをインストール
+2. DBの `siteurl` を `http:〇〇〇〇〇〇/wp` に更新。
+3. 管理画面 → 外観 → テーマ から `base` を有効化
+4. npm パッケージをインストール
 
 ```bash
 cd dev
