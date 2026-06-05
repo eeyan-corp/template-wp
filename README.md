@@ -64,7 +64,20 @@ git clone -b minimal git@github.com:eeyan-corp/template-wp.git
  └── wp/
      └── wp-content/
          ├── themes/
-         │   └── base/ # テンプレートテーマ
+         │   └── base/
+         │       ├── front-page.php    # トップページテンプレート
+         │       ├── index.php         # フォールバックテンプレート
+         │       ├── style.css         # テーマ情報
+         │       ├── functions.php     # テーマ関数・設定
+         │       ├── inc/
+         │       │   ├── admin.php     # 管理画面カスタマイズ
+         │       │   └── post-types.php # カスタム投稿タイプ
+         │       ├── parts/
+         │       │   ├── header.php
+         │       │   ├── footer.php
+         │       │   ├── links.php     # CSS・フォント読み込み
+         │       │   └── scripts.php   # JS読み込み
+         │       └── acf-json/         # ACFフィールドグループ保存先
          └── plugins/
 ```
 

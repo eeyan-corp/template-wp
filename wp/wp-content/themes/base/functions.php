@@ -1,9 +1,10 @@
 <?php
 
 namespace {
-  require_once __DIR__ . "/inc/admin.php";
-  require_once __DIR__ . "/inc/post-types.php";
+  require_once __DIR__ . "/inc/admin.php";       // 管理画面カスタマイズ
+  require_once __DIR__ . "/inc/post-types.php";  // カスタム投稿タイプ
 
+  // 配列・オブジェクトの値を安全に取得
   function el($o, $k, $d=null){
     if(is_array($o)){
       return isset($o[$k]) ? $o[$k] : $d;
@@ -12,6 +13,7 @@ namespace {
     }
   }
 
+  // テンプレートファイルを変数付きで読み込む
   function view($view, $vars=[]){
     if(file_exists(__DIR__ . "{$view}.php")){
       extract($vars);
@@ -19,23 +21,9 @@ namespace {
     }
   }
 
+  // parts/配下のパーツファイルを読み込む
   function part($part, $vars=[]){
     view("/parts/{$part}", $vars);
-  }
-
-  function get_pagination(){
-    global $wp_query;
-
-    $current = el($wp_query->query, "paged", 1);
-    $max = $wp_query->max_num_pages;
-
-    return [
-      "current" => $current,
-      "per_page" => $wp_query->query_vars["posts_per_page"],
-      "max" => $max,
-      "has_prev" => $current != 1,
-      "has_next" => $current != $max
-    ];
   }
 };
 

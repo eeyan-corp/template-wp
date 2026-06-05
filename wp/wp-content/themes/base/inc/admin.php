@@ -31,22 +31,3 @@ add_action("admin_menu", function(){
 });
 
 
-/* --------------------------------------------------
- * 管理画面のCSS, JSの読み込み
- */
-
-add_action("admin_print_styles", function(){
-  if(file_exists(__DIR__ . "/assets/admin.css")){
-    echo "<style>\n";
-    include __DIR__ . "/assets/admin.css";
-    echo "</style>\n";
-  }
-});
-
-add_action("admin_print_footer_scripts", function(){
-  if(file_exists(__DIR__ . "/assets/admin.js")){
-    echo "<script>\n";
-    include __DIR__ . "/assets/admin.js";
-    echo "</script>\n";
-  }
-});
