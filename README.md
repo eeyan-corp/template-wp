@@ -71,9 +71,9 @@ git clone -b minimal git@github.com:eeyan-corp/template-wp.git
          │       │   ├── admin.php     # 管理画面カスタマイズ
          │       │   └── post-types.php # カスタム投稿タイプ
          │       ├── parts/
+         │       │   ├── head.php      # headタグ・CSS読み込み
          │       │   ├── header.php
          │       │   ├── footer.php
-         │       │   ├── links.php     # CSS・フォント読み込み
          │       │   └── scripts.php   # JS読み込み
          │       └── acf-json/         # ACFフィールドグループ保存先
          └── plugins/
