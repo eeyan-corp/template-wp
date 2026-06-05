@@ -17,9 +17,12 @@ git clone git@github.com:eeyan-corp/template-wp.git
 git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 ```
 
-> ⚠️ リポジトリ作成時の「Include all branches」は **Off** のままにしてください。`minimal` はテンプレート用ブランチのため、案件リポジトリには不要です。
+> **Include all branches** について
+> - **Off**（デフォルト）: `main` ブランチのみコピーされます
+> - **On**: `main` + `minimal` 両ブランチがコピーされます
 >
-> On にすると以下のバナーが表示されますが、**マージしないでください。**
+> `minimal` ブランチが不要な場合は Off のままで構いません。
+> On にすると以下のバナーが表示されますが、`minimal` を `main` へ**マージしないでください。**
 >
 > ![minimal PR banner](docs/minimal-pr-banner.png)
 
