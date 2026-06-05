@@ -19,7 +19,7 @@ git clone git@github.com:eeyan-corp/template-wp.git
 git clone -b minimal git@github.com:eeyan-corp/template-wp.git
 ```
 
-「Use this template」を使う場合、`minimal` を使用するときは「Include all branches」を **On** にしてください。
+「Use this template」を使う場合、デフォルトは `main` ブランチが選択されます。`minimal` を使用するときは「Include all branches」を **On** にしてください。
 
 > ⚠️ リポジトリ作成後に表示される以下のバナーは無視してください。`minimal` を `main` へ**マージしないでください。**
 >
