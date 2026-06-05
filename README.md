@@ -4,9 +4,9 @@ WordPressコーディング用テンプレートリポジトリです。
 
 ## ブランチ
 
-| ブランチ | 概要 |
-|----------|------|
-| `main` | フル版。レスポンシブmixin・rem換算・表示制御クラスあり |
+| ブランチ  | 概要                                                     |
+| --------- | -------------------------------------------------------- |
+| `main`    | フル版。レスポンシブmixin・rem換算・表示制御クラスあり   |
 | `minimal` | シンプル版。SCSSのベース機能なし、メディアクエリは直書き |
 
 使用するブランチをどちらか選んでリポジトリを作成してください。
@@ -50,18 +50,12 @@ WPが `app/public/` 直下に自動インストールされます。
 
 #### 2. WPファイルを `wp/` フォルダに移動
 
-```bash
-cd app/public
-mkdir wp
-mv wp-admin wp-includes wp-*.php xmlrpc.php wp-content wp/
-```
-
 #### 3. データベースの siteurl を更新
 
 Local の Adminer で `wp_options` テーブルを開き、`siteurl` を以下に変更します。
 
 ```
-http://サイト名.local/wp
+http://localhost:〇〇〇/wp
 ```
 
 #### 4. `wp/wp-content/` を削除してテンプレートをclone
@@ -83,7 +77,7 @@ npm install
 
 ---
 
-## 開発
+## 開発時に使えるコマンド一覧
 
 ```bash
 cd dev
