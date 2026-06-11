@@ -34,7 +34,7 @@ main {
 }
 
 :focus-visible {
-  @include f.mq-min(pc1) {
+  @include f.mq-min(pc) {
     outline: 2px solid var(--color-main);
     outline-offset: 4px;
   }

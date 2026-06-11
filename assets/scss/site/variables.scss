@@ -1,8 +1,8 @@
 // コンテンツの基本サイズ
 // 各ブレイクポイントのmax-widthを定義
 $break-points: (
-  sp: 768,
-  tb: 1440,
+  sp: 767,
+  tb: 1279,
   pc: null,
 ) !default;
 
@@ -10,5 +10,5 @@ $break-points: (
 $base-widths: (
   sp: 390,
   tb: 1440,
-  pc: null // nullにすると1rem:1pxで固定,
+  pc: null, // nullにすると1rem:1pxで固定,
 ) !default;
