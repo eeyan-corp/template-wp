@@ -18,6 +18,8 @@ module.exports = {
     path: path.resolve(__dirname, "../assets/css"),
     //ファイルを出力する前にディレクトリをクリーンアップ
     clean: true,
+    // ソースマップ内のソースパスを実ファイルの絶対パスにする（DevToolsで正しく辿れる）
+    devtoolModuleFilenameTemplate: "[absolute-resource-path]",
   },
   module: {
     rules: [
@@ -39,12 +41,15 @@ module.exports = {
               // 0 => no loaders (default);
               // 1 => postcss-loader;
               // 2 => postcss-loader, sass-loader
+              sourceMap: enabledSourceMap,
             },
           },
           // ▼PostCSS（autoprefixer）のための設定
           {
             loader: "postcss-loader",
             options: {
+              // autoprefixerの行挿入で位置がズレないようマップを引き継ぐ
+              sourceMap: enabledSourceMap,
               postcssOptions: {
                 // Autoprefixer+gridのベンダープレフィックスを有効化
                 plugins: [require("autoprefixer")({ grid: true })],
@@ -55,6 +60,7 @@ module.exports = {
           {
             loader: "sass-loader",
             options: {
+              sourceMap: enabledSourceMap,
               sassOptions: {
                 outputStyle: "expanded",
               },
