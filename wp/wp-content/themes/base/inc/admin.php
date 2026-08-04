@@ -2,10 +2,10 @@
 
 namespace Site\Admin;
 
-if(!defined("ABSPATH")) die();
+if (!defined("ABSPATH")) die();
 
 // 管理メニューの整理
-add_action("admin_menu", function(){
+add_action("admin_menu", function () {
   $pages = [
     // "index.php",              // ダッシュボード
     "edit.php",                  // 投稿
@@ -19,5 +19,5 @@ add_action("admin_menu", function(){
     // "options-general.php",    // 設定
   ];
 
-  foreach($pages as $page) remove_menu_page($page);
+  foreach ($pages as $page) remove_menu_page($page);
 });
