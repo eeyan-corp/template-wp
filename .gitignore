@@ -18,5 +18,7 @@ wp/wp-content/upgrade/
 wp/wp-content/uploads/
 wp/wp-content/mu-plugins/
 wp/wp-content/wp-cache-config.php
-wp/wp-content/plugins/siteguard/really-simple-captcha/
-wp/wp-content/plugins/siteguard/error.log
+wp/wp-content/languages/
+wp/wp-content/ai1wm-backups/
+wp/wp-content/plugins/all-in-one-wp-migration/storage/
+wp/wp-content/plugins/cloudsecure-wp-security/log/
