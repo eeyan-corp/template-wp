@@ -1,8 +1,1230 @@
 @use "../../base/shortcut-functions" as f;
 @use "../modules" as modules;
 
-#top {
+@keyframes linework-wave {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0.9%, 1.3%);
+  }
 }
 
-@include f.mq(sp) {
+#top {
+  main {
+    overflow-x: clip;
+    background: var(--color-base);
+  }
+
+  .fv {
+    position: relative;
+    background: var(--color-bg); // 空の画像が透明にフェードするため白地に置く
+    height: 72rem;
+    @include f.mq(sp) {
+      display: grid;
+      align-content: center;
+      gap: 3.2rem;
+      height: auto;
+      min-height: 100lvh;
+      padding: 10rem 2.4rem 26rem;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("../images/top/fv-bg.jpg") no-repeat right bottom / cover;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: calc(50% - 64rem);
+      bottom: 0;
+      width: 80rem;
+      height: 62rem;
+      background: url("../images/top/fv-img01.png") no-repeat right bottom / auto 100%;
+      @include f.mq(sp) {
+        right: 0;
+        width: 100%;
+        height: 30rem;
+        background-image: url("../images/top/fv-img01-sp.png");
+      }
+    }
+
+    .linework {
+      top: 0;
+      left: 0;
+      right: calc(50% - 16rem);
+      height: 72rem;
+      @include f.mq(sp) {
+        inset: 0;
+        height: auto;
+      }
+    }
+
+    h1 {
+      position: absolute;
+      top: 11rem;
+      left: max(4rem, 50% - 60rem);
+      z-index: 1;
+      width: 64rem;
+      aspect-ratio: 513.275 / 322.175;
+      background: url("../images/top/fv-catchcopy.svg") no-repeat center / contain;
+      overflow: hidden;
+      text-indent: 100%;
+      white-space: nowrap;
+      @include f.mq(sp) {
+        position: static;
+        max-width: 32rem;
+      }
+    }
+
+    .lead {
+      display: grid;
+      justify-items: start;
+      gap: 4.8rem;
+      position: absolute;
+      top: 53rem;
+      left: max(6.9rem, 50% - 57.1rem);
+      z-index: 1;
+      @include f.mq(sp) {
+        position: static;
+        gap: 2.4rem;
+      }
+    }
+  }
+
+  .guide {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    border-radius: 0.4rem;
+    background: #fff;
+    padding-block: 2.4rem;
+    font-feature-settings: "palt";
+    @include f.mq(sp) {
+      display: grid;
+      justify-content: center;
+      gap: 1.6rem;
+      padding-block: 2rem;
+      font-feature-settings: normal;
+    }
+
+    dl {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      @include f.mq(sp) {
+        display: grid;
+        justify-items: center;
+        gap: 0.8rem;
+        text-align: center;
+      }
+    }
+
+    dl:first-child {
+      border-right: 1px solid var(--color-main);
+      padding-right: 2.4rem;
+      @include f.mq(sp) {
+        border-right: none;
+        border-bottom: 1px solid var(--color-font);
+        padding: 0 0 1.6rem;
+      }
+    }
+
+    .tag {
+      flex-shrink: 0;
+      border-radius: calc(infinity * 1px);
+      background: var(--color-main);
+      padding: 0.4rem 1.2rem;
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 1.6;
+
+      &.gray {
+        background: var(--color-gray);
+      }
+    }
+
+    .date {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+      @include f.mq(sp) {
+        font-size: 1.7rem;
+      }
+    }
+
+    dd {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+  }
+
+  .philosophy {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 0 6.4rem 6.4rem;
+    background: linear-gradient(90deg, rgb(252 44 120 / 0.2) 0%, rgb(254 186 84 / 0.2) 100%), var(--color-base);
+    padding-block: 8rem;
+    @include f.mq(sp) {
+      border-radius: 0 0 3.2rem 3.2rem;
+      padding-block: 6.4rem;
+    }
+
+    .linework {
+      top: 8rem;
+      left: 0;
+      width: 100%;
+      aspect-ratio: 1280 / 828;
+    }
+
+    > :not(.linework) {
+      position: relative;
+    }
+
+    .common-label {
+      color: var(--color-main);
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: 32.9rem 39.7rem 9.4rem;
+      align-items: center;
+      gap: 8.3rem;
+      margin-top: 2.4rem;
+
+      // カンプでは縦書きコピーがコンテンツ幅から右へ26pxはみ出す。tb域は本文を詰めて収める
+      @include f.mq(tb) {
+        grid-template-columns: 32.9rem minmax(0, 39.7rem) 9.4rem;
+        gap: 4rem;
+      }
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 4rem;
+      }
+    }
+
+    // 画像 → 見出し → 本文 の順に組み替える
+    .text {
+      display: grid;
+      justify-items: start;
+      gap: 3.2rem;
+      @include f.mq(sp) {
+        order: 1;
+      }
+
+      p {
+        line-height: 2.5;
+        @include f.mq(sp) {
+          line-height: 2.2;
+        }
+      }
+
+      .common-btn {
+        @include f.mq(sp) {
+          justify-self: center;
+        }
+      }
+    }
+
+    // SPはカラム幅いっぱいだと縦に伸びすぎるので、少し絞って中央に置く
+    .visual {
+      @include f.mq(sp) {
+        justify-self: center;
+        width: 24rem;
+      }
+    }
+
+    // 写真1枚。カラム幅いっぱいまで使い、縦横比はカンプ（262:368）を保つ
+    .visual img {
+      aspect-ratio: 262 / 368;
+      border-radius: 3.2rem;
+      object-fit: cover;
+    }
+
+    .copy {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 3.2rem;
+      @include f.mq(sp) {
+        display: grid;
+        gap: 0;
+      }
+
+      span {
+        writing-mode: vertical-rl;
+        color: var(--color-main);
+        font-size: 3.2rem;
+        font-weight: 700;
+        line-height: 0.97;
+        letter-spacing: 0.1875em;
+        @include f.mq(sp) {
+          writing-mode: horizontal-tb;
+          font-size: 2.4rem;
+          line-height: 1.8;
+          letter-spacing: 0.05em;
+        }
+      }
+
+      // 2行目（左の列）を1文字分下げて1行目とずらす。字送り = 1em + letter-spacing
+      span:last-child {
+        padding-top: 1.1875em;
+        @include f.mq(sp) {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  .scholarship {
+    background: var(--color-base);
+    padding-block: 8rem 4.8rem;
+    @include f.mq(sp) {
+      padding-block: 6.4rem;
+    }
+
+    .common-label {
+      color: var(--color-yellow);
+    }
+
+    h2 {
+      margin-top: 2.4rem;
+      color: var(--color-yellow);
+      @include f.mq(sp) {
+        padding-block: 0;
+      }
+    }
+
+    .amount,
+    .target {
+      margin-top: 3.5rem;
+      @include f.mq(sp) {
+        margin-top: 2.4rem;
+      }
+    }
+
+    .amount {
+      display: grid;
+      grid-template-columns: 39.9rem 50.1rem;
+      align-items: end;
+      gap: 5.4rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 3.2rem;
+      }
+    }
+
+    .figure {
+      display: grid;
+      gap: 3rem;
+
+      p:last-child {
+        font-size: 1.4rem;
+        line-height: 1.6;
+      }
+    }
+
+    .number {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.8rem;
+      color: var(--color-yellow);
+      font-size: 12rem;
+      font-weight: 900;
+      line-height: 1.2;
+      @include f.mq(sp) {
+        justify-content: center;
+        font-size: 8rem;
+      }
+
+      span {
+        padding-bottom: 1.6rem;
+        color: var(--color-font);
+        font-size: 3.2rem;
+        font-weight: 700;
+        @include f.mq(sp) {
+          font-size: 2.4rem;
+        }
+      }
+    }
+
+    dl {
+      display: grid;
+      gap: 0.8rem;
+
+      dt {
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      dd {
+        font-size: 1.4rem;
+        line-height: 1.6;
+      }
+
+      dd + dt {
+        margin-top: 1.6rem;
+        border-top: 1px solid var(--color-font);
+        padding-top: 2.4rem;
+      }
+    }
+
+    .target {
+      display: grid;
+      gap: 2.4rem;
+      border-radius: 0.8rem;
+      background: #fff;
+      padding: 3.2rem 3.2rem 4rem;
+      @include f.mq(sp) {
+        padding: 2.4rem 2rem 3.2rem;
+      }
+
+      .head {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+        @include f.mq(sp) {
+          display: grid;
+          justify-items: start;
+          gap: 0.8rem;
+        }
+      }
+
+      .tag {
+        flex-shrink: 0;
+        border-radius: 0.4rem;
+        background: var(--color-yellow);
+        padding: 0.4rem 0.8rem;
+        color: #fff;
+      }
+
+      small {
+        margin-left: 0.4rem;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        @include f.mq(sp) {
+          margin-left: 0;
+        }
+      }
+
+      ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem 2.4rem;
+        @include f.mq(sp) {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+      }
+
+      li {
+        display: grid;
+        grid-template-columns: 4.4rem auto;
+        align-items: center;
+        gap: 1.2rem;
+        border-bottom: 1px solid var(--color-font);
+        padding-block: 1.6rem;
+        font-size: 1.4rem;
+        line-height: 1.6;
+        @include f.mq(sp) {
+          font-size: 1.3rem;
+        }
+
+        &::before {
+          content: "";
+          height: 4.4rem;
+          background: url("../images/common/icon-check.svg") no-repeat center / contain;
+        }
+
+        // SPは1列になるので、上罫線は先頭の1件だけに付け替える
+        &:nth-child(-n + 2) {
+          border-top: 1px solid var(--color-font);
+          @include f.mq(sp) {
+            border-top: none;
+          }
+        }
+
+        &:first-child {
+          @include f.mq(sp) {
+            border-top: 1px solid var(--color-font);
+          }
+        }
+
+        &:nth-child(n + 3) {
+          padding-top: 0.8rem;
+          @include f.mq(sp) {
+            padding-top: 1.6rem;
+          }
+        }
+      }
+    }
+  }
+
+  .support {
+    padding-block: 16rem 12rem;
+    @include f.mq(sp) {
+      padding-block: 10rem 8rem;
+    }
+
+    .common-label {
+      color: var(--color-green);
+    }
+
+    // 枠の下端で断ち切らず、下のparentsセクションへ流し込む
+    .linework {
+      top: 81.1rem;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      aspect-ratio: 1280 / 191;
+      @include f.mq(sp) {
+        top: auto;
+        bottom: 2rem;
+      }
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: 86.7rem 3.1rem;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+      @include f.mq(sp) {
+        grid-template-columns: 1fr;
+        gap: 3.2rem;
+      }
+    }
+
+    .program {
+      display: grid;
+      grid-template-columns: repeat(3, 27.3rem);
+      align-items: start;
+      gap: 2.4rem;
+      margin-top: 8rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 4rem;
+        margin-top: 0;
+      }
+
+      li {
+        display: grid;
+        gap: 1.8rem;
+      }
+
+      li:nth-child(1) {
+        margin-top: 9.6rem;
+        @include f.mq(sp) {
+          margin-top: 0;
+        }
+      }
+
+      li:nth-child(2) {
+        margin-top: 4.8rem;
+        @include f.mq(sp) {
+          margin-top: 0;
+        }
+      }
+
+      img {
+        border-radius: 0.8rem;
+        height: 18.9rem;
+        object-fit: cover;
+      }
+
+      h3 {
+        span {
+          display: inline-block;
+          color: var(--color-green);
+          font-size: 2rem;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+      }
+
+      p {
+        font-size: 1.4rem;
+        line-height: 1.6;
+      }
+    }
+
+    .text {
+      display: grid;
+      justify-items: end;
+      gap: 3.2rem;
+      margin-left: auto;
+      width: 43.5rem;
+      text-align: right;
+      @include f.mq(sp) {
+        justify-items: center;
+        width: auto;
+        text-align: center;
+      }
+    }
+
+    // SPは横組みにして先頭へ回す
+    .copy {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      writing-mode: vertical-rl;
+      color: var(--color-green);
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 0.97;
+      letter-spacing: 0.2em;
+      @include f.mq(sp) {
+        order: -1;
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: start;
+        margin-top: 2.4rem;
+        writing-mode: horizontal-tb;
+        font-size: 2.6rem;
+        line-height: 1.4;
+        letter-spacing: 0.05em;
+      }
+
+      span {
+        margin-inline-start: 2rem;
+        font-size: 1.8rem;
+        @include f.mq(sp) {
+          margin-inline-start: 0.8rem;
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+
+  .parents {
+    background: linear-gradient(180deg, #fff 0%, var(--color-base) 100%);
+
+    .card {
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      border-radius: 6.4rem;
+      background: var(--gradient-blue);
+      width: min(128rem, 100%);
+      margin-inline: auto;
+      padding-block: 8rem;
+      @include f.mq(sp) {
+        border-radius: 3.2rem;
+        padding-block: 6.4rem;
+      }
+    }
+
+    .linework {
+      top: -10.623rem;
+      left: 60.637rem;
+      width: 48.4526rem;
+      height: 118.02rem;
+      transform: rotate(19.53deg);
+      mix-blend-mode: screen;
+      @include f.mq(sp) {
+        left: 20%;
+      }
+    }
+
+    .card > :not(.linework) {
+      position: relative;
+    }
+
+    .common-label {
+      color: var(--color-sky);
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: 65.6rem auto;
+      align-items: center;
+      gap: 4rem;
+      margin-top: 2.4rem;
+      padding-right: 8rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        padding-right: 0;
+      }
+    }
+
+    img {
+      align-self: start;
+      margin-bottom: -4.9rem;
+      border-radius: 0 999px 999px 0;
+      height: 61.2rem;
+      object-fit: cover;
+      @include f.mq(sp) {
+        margin-bottom: 0;
+        width: 90%;
+        height: 32rem;
+      }
+    }
+
+    .text {
+      display: grid;
+      justify-items: end;
+      gap: 3.2rem;
+      text-align: right;
+      @include f.mq(sp) {
+        justify-items: center;
+        margin-inline: auto;
+        padding-inline: 2.4rem;
+        text-align: center;
+      }
+
+      h2 {
+        color: var(--color-sky);
+        margin-right: -0.15em;
+        white-space: nowrap;
+        @include f.mq(sp) {
+          margin-right: 0;
+          white-space: normal;
+        }
+      }
+
+      p {
+        width: 33.9rem;
+        @include f.mq(sp) {
+          width: auto;
+        }
+      }
+    }
+  }
+
+  .schedule {
+    position: relative;
+    background: var(--color-base);
+    padding-top: 12rem;
+    @include f.mq(sp) {
+      padding-top: 6.4rem;
+    }
+
+    .common-label {
+      color: var(--color-blue);
+    }
+
+    .linework {
+      top: 30.3rem;
+      left: 0;
+      width: 100%;
+      aspect-ratio: 1280 / 817;
+      @include f.mq(sp) {
+        top: 20rem;
+      }
+    }
+
+    > :not(.linework) {
+      position: relative;
+    }
+
+    h2 {
+      margin-top: 2.4rem;
+      color: var(--color-blue);
+    }
+
+    .flow {
+      display: grid;
+      gap: 1.6rem;
+      margin-top: 8rem;
+      @include f.mq(sp) {
+        gap: 2.4rem;
+        margin-top: 4rem;
+      }
+
+      li {
+        display: grid;
+        align-content: start;
+        gap: 2.4rem;
+        border: 2px solid var(--color-blue);
+        border-radius: 0.8rem;
+        background: #fff;
+        padding: 2.4rem 2.4rem 3.2rem;
+      }
+
+      // 矢印は疑似要素なので .js-stagger の対象外。カードに続けて出す
+      &::before,
+      &::after {
+        content: "";
+        align-self: center;
+        height: 4.973rem;
+        background: url("../images/top/schedule-arrow.svg") no-repeat center / contain;
+        opacity: 0;
+        transition: opacity 0.8s ease 0.24s;
+        @include f.mq(sp) {
+          justify-self: center;
+          width: 3.105rem;
+          rotate: 90deg;
+        }
+      }
+
+      &.is-inview::before,
+      &.is-inview::after {
+        opacity: 1;
+      }
+
+      @include f.mq-min(tb) {
+        grid-template-columns: 1fr 3.105rem 1fr 3.105rem 1fr;
+
+        li,
+        &::before,
+        &::after {
+          grid-row: 1;
+        }
+
+        li:nth-child(1) {
+          grid-column: 1;
+        }
+
+        li:nth-child(2) {
+          grid-column: 3;
+        }
+
+        li:nth-child(3) {
+          grid-column: 5;
+        }
+
+        &::before {
+          grid-column: 2;
+        }
+
+        &::after {
+          grid-column: 4;
+        }
+      }
+
+      // SPは縦積みになるので、矢印を挟む順に並べ替える
+      li:nth-child(1) {
+        @include f.mq(sp) {
+          order: 1;
+        }
+      }
+
+      &::before {
+        @include f.mq(sp) {
+          order: 2;
+        }
+      }
+
+      li:nth-child(2) {
+        @include f.mq(sp) {
+          order: 3;
+        }
+      }
+
+      &::after {
+        @include f.mq(sp) {
+          order: 4;
+        }
+      }
+
+      li:nth-child(3) {
+        @include f.mq(sp) {
+          order: 5;
+        }
+      }
+
+      .date {
+        border-radius: 0.4rem;
+        background: var(--color-blue);
+        color: #fff;
+        padding: 0.2rem 1.2rem;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      h3 {
+        white-space: nowrap;
+        font-feature-settings: "palt";
+        font-size: 2.4rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0.12em;
+      }
+
+      li > p:last-child {
+        margin-top: -0.8rem;
+      }
+    }
+  }
+
+  .apply {
+    position: relative;
+    z-index: 1;
+    background: var(--color-base);
+    padding-block: 12rem 4.8rem;
+    @include f.mq(sp) {
+      padding-block: 8rem 6.4rem;
+    }
+
+    .common-label {
+      color: var(--color-blue);
+    }
+
+    h2 {
+      margin-top: 2.4rem;
+      color: var(--color-blue);
+    }
+
+    .lead {
+      margin-top: 3.2rem;
+      line-height: 2;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.4rem;
+      margin-top: 4rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 1.6rem;
+        margin-top: 3.2rem;
+      }
+
+      // SPは番号の右に見出しを並べ、説明文は下段で全幅
+      li {
+        display: grid;
+        align-content: center;
+        gap: 2.4rem;
+        border: 2px solid var(--color-blue);
+        border-radius: 0.8rem;
+        background: #fff;
+        padding: 2.4rem 2.4rem 3.2rem;
+        @include f.mq(sp) {
+          grid-template-columns: auto 1fr;
+          align-items: center;
+          gap: 1.6rem 2rem;
+        }
+      }
+
+      h3 {
+        color: var(--color-blue);
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      // 見出しと本文は一組として詰める（scheduleのカードと同じ組み方）
+      li > p:last-child {
+        margin-top: -1.2rem;
+        @include f.mq(sp) {
+          grid-column: 1 / -1;
+          margin-top: 0;
+        }
+      }
+    }
+
+    // SPは下線をやめて、番号と見出しを分ける縦の区切りにする
+    .number {
+      width: 6.19rem;
+      color: var(--color-blue);
+      font-family: var(--font-zen-kaku);
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      @include f.mq(sp) {
+        border-right: 1px solid;
+        width: auto;
+        padding-right: 2rem;
+        font-size: 1.8rem;
+      }
+
+      span {
+        display: block;
+        margin-top: -1.27rem;
+        border-bottom: 1px solid;
+        font-size: 6.4rem;
+        @include f.mq(sp) {
+          margin-top: -1rem;
+          border-bottom: none;
+          font-size: 4rem;
+          letter-spacing: 0.08em;
+        }
+      }
+    }
+
+    .common-btn {
+      margin-top: 8rem;
+      @include f.mq(sp) {
+        margin-top: 5.6rem;
+      }
+    }
+  }
+
+  .news {
+    padding-block: 16rem 8rem;
+    @include f.mq(sp) {
+      padding-block: 12rem 6.4rem;
+    }
+
+    .common-label {
+      color: var(--color-pink);
+    }
+
+    // 見出しと一覧ボタンを1行目に並べ、記事一覧は2行目で全幅
+    .common-inner {
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+      justify-content: space-between;
+      column-gap: 2.4rem;
+      margin-top: 2.4rem;
+      @include f.mq(sp) {
+        grid-template-columns: 1fr;
+      }
+
+      // SPはボタンをセクション末尾に送って中央寄せ
+      > .common-btn {
+        grid-area: 1 / 2;
+        @include f.mq(sp) {
+          grid-area: auto;
+          order: 1;
+          justify-self: center;
+          margin-top: 4rem;
+        }
+      }
+
+      > ul,
+      > .empty {
+        grid-column: 1 / -1;
+      }
+    }
+
+    h2 {
+      color: var(--color-pink);
+    }
+
+    ul {
+      border-top: 1px solid var(--color-font);
+      margin-top: 8rem;
+      @include f.mq(sp) {
+        margin-top: 4rem;
+      }
+    }
+
+    li {
+      border-bottom: 1px solid var(--color-font);
+
+      a {
+        display: grid;
+        gap: 1.2rem;
+        padding: 2.8rem 2.4rem;
+        color: var(--color-font);
+        @include f.mq(sp) {
+          padding: 2rem 0;
+        }
+
+        @include modules.hover {
+          opacity: 0.7;
+        }
+      }
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 1.4rem;
+      line-height: 1.6;
+    }
+
+    .tag {
+      border-radius: 0.6rem;
+      background: var(--color-pink);
+      padding-inline: 2.4rem;
+      color: #fff;
+    }
+
+    .empty {
+      margin-top: 4rem;
+    }
+  }
+
+  .faq {
+    background: var(--color-base);
+    padding-block: 8rem;
+
+    .common-label {
+      color: var(--color-pink);
+    }
+
+    // 見出しと一覧ボタンを1行目に並べ、質問リストは2行目で全幅
+    .common-inner {
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+      justify-content: space-between;
+      column-gap: 2.4rem;
+      margin-top: 2.4rem;
+      @include f.mq(sp) {
+        grid-template-columns: 1fr;
+      }
+
+      // SPはボタンをセクション末尾に送って中央寄せ
+      > .common-btn {
+        grid-area: 1 / 2;
+        @include f.mq(sp) {
+          grid-area: auto;
+          order: 1;
+          justify-self: center;
+          margin-top: 4rem;
+        }
+      }
+    }
+
+    h2 {
+      color: var(--color-pink);
+    }
+
+    .common-inner > ul {
+      display: grid;
+      grid-column: 1 / -1;
+      margin-top: 4.8rem;
+      @include f.mq(sp) {
+        margin-top: 1.6rem;
+      }
+    }
+
+    li {
+      border-bottom: 1px solid var(--color-line);
+    }
+
+    .question {
+      display: grid;
+      grid-template-columns: 5.6rem 1fr 2.4rem;
+      align-items: center;
+      gap: 4.8rem;
+      width: 100%;
+      padding: 2.4rem;
+      color: var(--color-font);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: left;
+      @include f.mq(sp) {
+        grid-template-columns: 3.6rem 1fr 2.4rem;
+        gap: 1.6rem;
+        padding: 2.4rem 0;
+        font-size: 1.6rem;
+      }
+
+      &::before {
+        content: "";
+        height: 5.6rem;
+        background: url("../images/common/icon-faq-q.svg") no-repeat center / contain;
+        @include f.mq(sp) {
+          height: 3.6rem;
+        }
+      }
+
+      &::after {
+        content: "";
+        height: 2.4rem;
+        background:
+          linear-gradient(currentColor, currentColor) no-repeat center / 100% 2px,
+          linear-gradient(currentColor, currentColor) no-repeat center / 2px 100%;
+        transition: 0.3s ease;
+      }
+
+      @include modules.hover {
+        background: #fff;
+      }
+    }
+
+    .answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+      transition: grid-template-rows 0.3s ease;
+
+      > div {
+        min-height: 0;
+      }
+
+      .body {
+        display: grid;
+        grid-template-columns: 5.6rem auto;
+        align-items: center;
+        gap: 4.8rem;
+        padding: 1.6rem 2.4rem 2.4rem;
+        @include f.mq(sp) {
+          grid-template-columns: 3.6rem auto;
+          gap: 1.6rem;
+          padding-bottom: 2.4rem;
+        }
+
+        &::before {
+          content: "";
+          height: 5.6rem;
+          background: url("../images/common/icon-faq-a.svg") no-repeat center / contain;
+          @include f.mq(sp) {
+            height: 3.6rem;
+          }
+        }
+      }
+    }
+
+    .is-open {
+      .question::after {
+        background-size:
+          100% 2px,
+          2px 0;
+      }
+
+      .answer {
+        grid-template-rows: 1fr;
+      }
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .linework path {
+      animation: none;
+    }
+
+    // CSS の filter は presentation attribute より優先されるので SMIL ごと無効化できる
+    .linework-body {
+      filter: none;
+    }
+  }
+
+  .support,
+  .news {
+    position: relative;
+    background: #fff;
+  }
+
+  // ベージュ地のセクションの下端を波形に見せる。
+  // 高さは固定（画面幅で伸ばすと次セクションの見出しに掛かるため）で、横だけ伸ばす。
+  // 波形は下に白いセクションが続くことが前提。後ろもベージュだと波形は見えないまま
+  // 次の見出しを塗りつぶしてしまうので、白セクションが隣にあるときだけ出す
+  .scholarship:has(+ .support),
+  .apply:has(+ .news) {
+    // SPは画面に対して波形が大きくなりすぎるため浅くする
+    &::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 -13.26rem;
+      height: 13.26rem;
+      background: url("../images/common/wave.svg") no-repeat center top / 100% 70%;
+      @include f.mq(sp) {
+        inset: auto 0 -6rem;
+        height: 6rem;
+        background-size: 100% 50%;
+      }
+    }
+  }
+
+  // 波形が下の白いセクションより前面にくるようにする
+  .scholarship {
+    position: relative;
+    z-index: 1;
+  }
 }

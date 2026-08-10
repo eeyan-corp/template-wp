@@ -1,0 +1,4 @@
+<!-- Figmaの書き出しはviewBoxが線幅ぴったりで、水平線が下端で欠けるため上下に0.5pxの余白を足している -->
+<svg width="26.2" height="8.4" viewBox="0 -0.5 26.2 8.4" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 7.69439H25.6726L18.0737 0.0954793" stroke="#FFFFFF" stroke-miterlimit="10"/>
+</svg>

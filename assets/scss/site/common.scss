@@ -2,15 +2,26 @@
 @use "./modules" as modules;
 
 :root {
-  --font-hiragino: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "Hiragino Sans", "メイリオ", "Meiryo", sans-serif;
-  --font-yu-gothic: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "メイリオ", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-  --font-yu-mincho: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
-  --font-noto-sans: "Noto Sans JP", "メイリオ", Meiryo, sans-serif;
-  --font-noto-serif: "Noto Serif JP", sans-serif;
-  --color-base: #faecee;
-  --color-main: #f293a0;
-  --color-accent: #fddc18;
-  --color-font: #333;
+  --font-noto-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "メイリオ", Meiryo, sans-serif;
+  --font-zen-kaku: "Zen Kaku Gothic New", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  --color-bg: #fff;
+  --color-base: #f8f4f1;
+  --color-font: #4d4d4d;
+  --color-gray: #888888;
+  --color-line: #dddddd;
+  --color-main: #ee6677;
+  --color-pink: #ee88bb;
+  --color-yellow: #ffaa33;
+  --color-green: #aacc33;
+  --color-sky: #00bbee;
+  --color-blue: #5577bb;
+  --color-line-green: #06c755;
+  --gradient-red: linear-gradient(90deg, #ee6677 0%, #feba54 100%);
+  --gradient-red-slide: linear-gradient(90deg, var(--color-main) 50%, #feba54 100%);
+  --gradient-blue: linear-gradient(180deg, #e8f7fd 0%, #eff2fd 100%);
+  --shadow: 0.2rem 0.2rem 0.4rem rgb(80 80 80 / 0.2);
+  --shadow-hover: 0.2rem 0.4rem 0.8rem rgb(80 80 80 / 0.2);
+  --content-padding: max(2.4rem, 50% - 48rem);
 }
 
 html {
@@ -20,9 +31,13 @@ html {
 
 body {
   -webkit-text-size-adjust: 100%;
-  // font-feature-settings: "palt";
+  background: var(--color-bg);
   color: var(--color-font);
   font-family: var(--font-noto-sans);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: 0.05em;
 
   &.fixed {
     overflow: hidden;
@@ -71,5 +86,544 @@ button {
   display: none;
   @include f.mq(sp) {
     display: block;
+  }
+}
+
+.common-inner {
+  padding-inline: var(--content-padding);
+}
+
+// スクロールで浮かび上がる演出。translateはtransformと独立して効くので、
+// ホバーなどで別途transformを持つ要素に付けても打ち消し合わない。
+// ただしtransitionは上書きになるため、a・buttonに掛けた共通のホバー分（transform / filter）も
+// ここで併記しておく。ずらし用のdelayも演出側の2つだけに掛ける
+.js-fade,
+.js-stagger > * {
+  --reveal-delay: 0s;
+  --reveal-x: 0;
+  --reveal-y: 3rem;
+
+  opacity: 0;
+  translate: var(--reveal-x) var(--reveal-y);
+  transition:
+    opacity 0.8s ease var(--reveal-delay),
+    translate 0.8s ease var(--reveal-delay),
+    transform 0.2s ease,
+    filter 0.2s ease,
+    background-position 0.2s ease;
+}
+
+.js-stagger > * {
+  --reveal-delay: calc(var(--i, 0) * 0.12s);
+}
+
+// 横から流し込むパターン。.js-fade / .js-stagger に連結して使う
+// （カスタムプロパティは .js-stagger > * 側で初期化しているので、子にも指定する）
+.js-fade.from-left,
+.js-stagger.from-left > * {
+  --reveal-x: -4rem;
+  --reveal-y: 0;
+}
+
+.js-fade.from-right,
+.js-stagger.from-right > * {
+  --reveal-x: 4rem;
+  --reveal-y: 0;
+}
+
+.js-fade.is-inview,
+.js-stagger.is-inview > * {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.linework {
+  position: absolute;
+  pointer-events: none;
+
+  // スクロール発火のために js-fade を付けているが、フェードとtranslateは不要なので打ち消す
+  &.js-fade {
+    opacity: 1;
+    translate: none;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  // うねりは全面のSVGフィルターを毎フレーム再計算するため、SPでは負荷が大きい。
+  // 線を描く演出（stroke-dashoffset）は軽いので残す
+  .linework-body {
+    @include f.mq(sp) {
+      filter: none;
+    }
+  }
+
+  // pathLength="1" で長さを正規化してあるので、パスの実長に関係なく 0〜1 で扱える。
+  // 1 = まだ描かれていない / 0 = 描き切った状態
+  path {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: linework-wave 6s ease-in-out infinite;
+    transition: stroke-dashoffset 1.4s ease-out var(--draw-delay, 0s);
+    @include f.mq(sp) {
+      animation: none;
+    }
+
+    @for $i from 2 through 13 {
+      &:nth-of-type(#{$i}) {
+        --draw-delay: #{($i - 1) * 0.08}s;
+
+        animation-delay: #{($i - 1) * -0.4}s;
+      }
+    }
+  }
+}
+
+// 保護者セクションだけ元のパスが下→上に描かれているので、逆側から描いて向きを揃える。
+// この下の .is-inview に上書きされる必要があるため、順序を入れ替えないこと
+.parents .linework path {
+  stroke-dashoffset: -1;
+}
+
+.linework.is-inview path {
+  stroke-dashoffset: 0;
+}
+
+.common-label {
+  display: grid;
+  grid-template-columns: max(4rem, calc((100% - 96rem) / 2 - 5.1rem)) auto;
+  align-items: center;
+  gap: 1.4rem;
+  color: var(--color-pink);
+  font-family: var(--font-zen-kaku);
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: normal;
+  @include f.mq(sp) {
+    grid-template-columns: 4rem auto;
+    gap: 1.2rem;
+    font-size: 1.4rem;
+  }
+
+  &::before {
+    content: "";
+    height: 1px;
+    background: currentColor;
+    scale: 0 1;
+    transform-origin: 0 50%;
+    transition: scale 0.6s ease;
+  }
+
+  &.wide {
+    grid-template-columns: max(4rem, calc((100% - 96rem) / 2 - 1.5rem)) auto;
+    @include f.mq(sp) {
+      grid-template-columns: 4rem auto;
+    }
+  }
+
+  // JSが1文字ずつ .char > span に分割する
+  .char {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+
+    > span {
+      display: inline-block;
+      translate: 0 110%;
+      rotate: 6deg;
+      transform-origin: 0 100%;
+      transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: calc(0.45s + var(--i, 0) * 0.05s); // ラインが引き終わってから
+    }
+  }
+
+  &.is-inview {
+    &::before {
+      scale: 1 1;
+    }
+
+    .char > span {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+  }
+}
+
+.common-title {
+  font-size: 4.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.15em;
+  @include f.mq(sp) {
+    font-size: 2.8rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+.common-subtitle {
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  @include f.mq(sp) {
+    font-size: 2.2rem;
+  }
+}
+
+.common-btn {
+  display: inline-grid;
+  grid-template-columns: auto 2.62rem;
+  align-items: center;
+  gap: 6.4rem;
+  border-radius: 0.8rem;
+  padding: 1.6rem;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  @include modules.gradient-hover;
+  @include f.mq(sp) {
+    gap: 2.4rem;
+    font-size: 1.4rem;
+  }
+
+  &::after {
+    content: "";
+    height: 0.84rem;
+    background: currentColor;
+    mask: url("../images/common/icon-arrow.svg") no-repeat center / contain;
+  }
+
+  &.ghost {
+    background: #fff;
+    color: var(--color-font);
+  }
+
+  &.beige {
+    background: var(--color-base);
+    color: var(--color-font);
+  }
+
+  &.line {
+    background: var(--color-line-green);
+  }
+
+  &.large {
+    grid-template-columns: auto 3.22rem;
+    justify-content: center;
+    padding: 2.4rem 3.2rem;
+    font-size: 2.4rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
+    @include f.mq(sp) {
+      padding: 2rem 2.4rem;
+      font-size: 1.7rem;
+    }
+
+    &::after {
+      height: 1.03rem;
+    }
+  }
+
+  &.block {
+    display: grid;
+  }
+
+  @include modules.hover {
+    transform: translateY(-0.2rem);
+    filter: drop-shadow(var(--shadow-hover));
+  }
+}
+
+.common-line {
+  background: #fff;
+  padding-block: 8rem;
+  @include f.mq(sp) {
+    padding-block: 5.6rem;
+  }
+
+  h2 {
+    text-align: center;
+    color: var(--color-line-green);
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: 24rem auto;
+    align-items: center;
+    justify-content: center;
+    gap: 8rem;
+    margin-top: 4.8rem;
+    @include f.mq(sp) {
+      grid-template-columns: auto;
+      justify-items: center;
+      gap: 3.2rem;
+      margin-top: 3.2rem;
+    }
+  }
+
+  .logo {
+    @include f.mq(sp) {
+      width: 24rem;
+    }
+  }
+
+  .text {
+    display: grid;
+    grid-template-columns: 12rem auto;
+    justify-items: start;
+    align-items: center;
+    gap: 1.6rem 2.4rem;
+    @include f.mq(sp) {
+      grid-template-columns: auto;
+      justify-items: center;
+      text-align: center;
+    }
+  }
+
+  .note {
+    grid-column: 1 / -1;
+    font-size: 1.6rem;
+    line-height: 1.7;
+  }
+
+  // SPは友だち追加ボタンから直接遷移できるため不要
+  .qr {
+    grid-row: 2 / span 2;
+    @include f.mq(sp) {
+      display: none;
+    }
+  }
+
+  .id {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    @include f.mq(sp) {
+      font-size: 1.7rem;
+    }
+  }
+}
+
+.common-cta {
+  display: grid;
+  place-items: center;
+  gap: 4.8rem;
+  position: relative;
+  padding-block: 8rem;
+  color: #fff;
+  text-align: center;
+  @include f.mq(sp) {
+    gap: 2.8rem;
+    padding: 6rem 2.4rem;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgb(0 18 76 / 0.7), rgb(0 18 76 / 0.7)),
+      url("../images/common/cta-image.jpg") no-repeat center / cover;
+  }
+
+  > * {
+    position: relative;
+  }
+
+  h2 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.8;
+    letter-spacing: 0.15em;
+    @include f.mq(sp) {
+      font-size: 2.4rem;
+      line-height: 1.4;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  .read {
+    font-size: 2.4rem;
+    line-height: 1.4;
+    @include f.mq(sp) {
+      font-size: 1.6rem;
+      line-height: 1.6;
+    }
+  }
+
+  .common-btn {
+    width: 40rem;
+    @include f.mq(sp) {
+      width: 100%;
+      max-width: 32rem;
+    }
+  }
+
+  .note {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    @include f.mq(sp) {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.common-contact {
+  background: #fff;
+  padding-block: 8rem;
+  @include f.mq(sp) {
+    padding-block: 5.6rem;
+  }
+
+  h2 {
+    margin-top: 3.2rem;
+    color: var(--color-font);
+    @include f.mq(sp) {
+      margin-top: 2rem;
+    }
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: 42.7rem 1fr;
+    align-items: center;
+    gap: 4.8rem;
+    margin-top: 6.4rem;
+    @include f.mq(sp) {
+      grid-template-columns: auto;
+      justify-items: center;
+      gap: 2.8rem;
+      margin-top: 3.2rem;
+    }
+  }
+
+  .common-btn {
+    @include f.mq(sp) {
+      width: 100%;
+    }
+  }
+}
+
+.lower main {
+  overflow-x: clip; // 横から流し込む演出の初期位置で横スクロールを出さない
+
+  // TOPのセクション帯と同じ見せ方（角丸＋グラデーション＋装飾ライン）で受ける
+  .fv {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 0 6.4rem 6.4rem;
+    background: linear-gradient(90deg, rgb(252 44 120 / 0.2) 0%, rgb(254 186 84 / 0.2) 100%), var(--color-base);
+    padding-block: 14rem 8rem;
+    @include f.mq(sp) {
+      border-radius: 0 0 3.2rem 3.2rem;
+      padding-block: 9.6rem 6.4rem;
+    }
+
+    .linework {
+      right: 0;
+      bottom: -2rem;
+      left: 0;
+      height: 14rem;
+      @include f.mq(sp) {
+        bottom: -1rem;
+        height: 8rem;
+      }
+    }
+
+    > :not(.linework) {
+      position: relative;
+    }
+
+    .title {
+      margin-top: 2.4rem;
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.1em;
+      @include f.mq(sp) {
+        margin-top: 1.6rem;
+        font-size: 2.2rem;
+      }
+
+      span {
+        font-size: 0.6em;
+      }
+    }
+  }
+
+  .breadcrumb {
+    padding-top: 2.4rem;
+    @include f.mq(sp) {
+      padding-top: 1.6rem;
+    }
+
+    ol {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem 0.8rem;
+      color: var(--color-gray);
+      font-size: 1.2rem;
+
+      li:not(:first-child)::before {
+        content: "＞";
+        margin-right: 0.8rem;
+      }
+
+      a {
+        color: inherit;
+        @include modules.hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  > .body {
+    padding-block: 6.4rem 12rem;
+    @include f.mq(sp) {
+      padding-block: 3.2rem 6.4rem;
+    }
+  }
+}
+
+#notfound .body .common-btn {
+  margin-top: 4rem;
+  @include f.mq(sp) {
+    margin-top: 3.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-fade,
+  .js-stagger > *,
+  .common-label .char > span {
+    opacity: 1;
+    translate: none;
+    rotate: none;
+    transition: none;
+  }
+
+  .common-label::before {
+    scale: 1 1;
+    transition: none;
+  }
+
+  .linework .linework-body {
+    filter: none;
+  }
+
+  .linework path {
+    stroke-dashoffset: 0;
+    animation: none;
+    transition: none;
   }
 }

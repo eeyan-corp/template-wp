@@ -1,0 +1,124 @@
+@use "../../base/shortcut-functions" as f;
+@use "../modules" as modules;
+
+#privacy main {
+  .lead {
+    margin-top: 3.4rem;
+    color: var(--color-font);
+  }
+
+  .policy {
+    counter-reset: policy;
+    margin-top: 3.4rem;
+    border-top: 1px dashed var(--color-line);
+    padding-top: 1.8rem;
+
+    > li {
+      counter-increment: policy;
+
+      + li {
+        margin-top: 2rem;
+        border-top: 1px dashed var(--color-line);
+        padding-top: 1.8rem;
+      }
+
+      > h2 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        line-height: 1.6;
+        @include f.mq-min(tb) {
+          font-size: 1.8rem;
+        }
+
+        &::before {
+          content: counter(policy);
+          display: inline-block;
+          margin-right: 0.8rem;
+          border-radius: 0.3rem;
+          background: var(--color-font);
+          padding: 0.2rem 0.8rem;
+          color: #fff;
+          font-size: 1.1rem;
+          vertical-align: 0.1em;
+        }
+      }
+
+      > p {
+        margin-top: 0.6rem;
+        color: var(--color-font);
+        font-size: 1.25rem;
+      }
+
+      > ul {
+        margin-top: 0.6rem;
+        color: var(--color-font);
+        font-size: 1.25rem;
+
+        li {
+          padding-left: 1em;
+          text-indent: -1em;
+
+          + li {
+            margin-top: 0.4rem;
+          }
+
+          &::before {
+            content: "・";
+          }
+        }
+      }
+    }
+  }
+
+  .office {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem 1.6rem;
+    margin-top: 0.8rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.6rem;
+    background: #f7f7f7;
+    padding: 1.4rem 1.6rem;
+    color: #444;
+    font-size: 1.25rem;
+    line-height: 1.9;
+    @include f.mq(sp) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    dt {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    dd:not(:last-of-type) {
+      @include f.mq(sp) {
+        margin-bottom: 1.2rem;
+      }
+    }
+  }
+
+  .consent {
+    margin-block: 3.4rem;
+    border-top: 1px dashed var(--color-line);
+    padding-top: 3.4rem;
+    text-align: center;
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.65;
+    }
+
+    p {
+      margin-top: 0.8rem;
+      color: var(--color-font);
+    }
+
+    .common-btn {
+      margin-top: 1.2rem;
+      margin-inline: auto;
+    }
+  }
+}

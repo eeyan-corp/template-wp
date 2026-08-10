@@ -1,0 +1,65 @@
+@use "../../base/shortcut-functions" as f;
+@use "../modules" as modules;
+
+#entry,
+#apply,
+#contact {
+  main {
+    .lead {
+      margin-top: 3.4rem;
+      text-align: center;
+      @include f.mq(sp) {
+        margin-top: 2.4rem;
+        text-align: initial;
+        font-feature-settings: "palt";
+        line-height: 2;
+        letter-spacing: 0.06em;
+      }
+    }
+
+    .period {
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+      gap: 1.6rem;
+      width: fit-content;
+      border: 1px solid var(--color-font);
+      border-radius: 0.4rem;
+      margin: 2.4rem auto 0;
+      padding: 2rem 2.4rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        justify-items: center;
+        gap: 0.8rem;
+        margin-top: 2rem;
+        padding: 1.6rem 2.4rem;
+      }
+
+      dt {
+        border-radius: 0.4rem;
+        background: var(--color-font);
+        padding: 0.4rem 1.2rem;
+        color: #fff;
+        font-size: 1.4rem;
+        line-height: 1.6;
+      }
+
+      dd {
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+        @include f.mq(sp) {
+          font-size: 1.7rem;
+        }
+      }
+    }
+
+    // 中身の見た目はformrun側のCSSに任せる
+    .formrun-embed {
+      margin-top: 4.8rem;
+      @include f.mq(sp) {
+        margin-top: 3.2rem;
+      }
+    }
+  }
+}

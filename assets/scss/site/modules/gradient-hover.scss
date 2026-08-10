@@ -1,0 +1,11 @@
+@use "./hover" as *;
+
+// 通常はグラデーション、ホバーで背景が右へ流れて --color-main の一色になる。
+// 「主色ベタ｜グラデーション」を2枚分（200%）敷き、背景位置を右端→左端へ送っている
+@mixin gradient-hover {
+  background: var(--gradient-red-slide) 100% 0 / 200% 100%;
+
+  @include hover {
+    background-position: 0 0;
+  }
+}
