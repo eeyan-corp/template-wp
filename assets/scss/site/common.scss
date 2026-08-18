@@ -93,10 +93,6 @@ button {
   padding-inline: var(--content-padding);
 }
 
-// スクロールで浮かび上がる演出。translateはtransformと独立して効くので、
-// ホバーなどで別途transformを持つ要素に付けても打ち消し合わない。
-// ただしtransitionは上書きになるため、a・buttonに掛けた共通のホバー分（transform / filter）も
-// ここで併記しておく。ずらし用のdelayも演出側の2つだけに掛ける
 .js-fade,
 .js-stagger > * {
   --reveal-delay: 0s;
@@ -117,8 +113,6 @@ button {
   --reveal-delay: calc(var(--i, 0) * 0.12s);
 }
 
-// 横から流し込むパターン。.js-fade / .js-stagger に連結して使う
-// （カスタムプロパティは .js-stagger > * 側で初期化しているので、子にも指定する）
 .js-fade.from-left,
 .js-stagger.from-left > * {
   --reveal-x: -4rem;
@@ -141,7 +135,6 @@ button {
   position: absolute;
   pointer-events: none;
 
-  // スクロール発火のために js-fade を付けているが、フェードとtranslateは不要なので打ち消す
   &.js-fade {
     opacity: 1;
     translate: none;
@@ -153,16 +146,12 @@ button {
     height: 100%;
   }
 
-  // うねりは全面のSVGフィルターを毎フレーム再計算するため、SPでは負荷が大きい。
-  // 線を描く演出（stroke-dashoffset）は軽いので残す
   .linework-body {
     @include f.mq(sp) {
       filter: none;
     }
   }
 
-  // pathLength="1" で長さを正規化してあるので、パスの実長に関係なく 0〜1 で扱える。
-  // 1 = まだ描かれていない / 0 = 描き切った状態
   path {
     transform-box: view-box;
     transform-origin: 50% 50%;
@@ -171,7 +160,9 @@ button {
     animation: linework-wave 6s ease-in-out infinite;
     transition: stroke-dashoffset 1.4s ease-out var(--draw-delay, 0s);
     @include f.mq(sp) {
+      stroke-dasharray: none;
       animation: none;
+      transition: none;
     }
 
     @for $i from 2 through 13 {
@@ -184,7 +175,6 @@ button {
   }
 }
 
-// 保護者セクションだけ元のパスが下→上に描かれているので、逆側から描いて向きを揃える。
 // この下の .is-inview に上書きされる必要があるため、順序を入れ替えないこと
 .parents .linework path {
   stroke-dashoffset: -1;
@@ -392,7 +382,6 @@ button {
     line-height: 1.7;
   }
 
-  // SPは友だち追加ボタンから直接遷移できるため不要
   .qr {
     grid-row: 2 / span 2;
     @include f.mq(sp) {
@@ -515,7 +504,6 @@ button {
 .lower main {
   overflow-x: clip; // 横から流し込む演出の初期位置で横スクロールを出さない
 
-  // TOPのセクション帯と同じ見せ方（角丸＋グラデーション＋装飾ライン）で受ける
   .fv {
     position: relative;
     overflow: hidden;

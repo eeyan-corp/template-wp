@@ -209,7 +209,6 @@
       }
     }
 
-    // 画像 → 見出し → 本文 の順に組み替える
     .text {
       display: grid;
       justify-items: start;
@@ -232,7 +231,6 @@
       }
     }
 
-    // SPはカラム幅いっぱいだと縦に伸びすぎるので、少し絞って中央に置く
     .visual {
       @include f.mq(sp) {
         justify-self: center;
@@ -240,7 +238,6 @@
       }
     }
 
-    // 写真1枚。カラム幅いっぱいまで使い、縦横比はカンプ（262:368）を保つ
     .visual img {
       aspect-ratio: 262 / 368;
       border-radius: 3.2rem;
@@ -442,7 +439,6 @@
           background: url("../images/common/icon-check.svg") no-repeat center / contain;
         }
 
-        // SPは1列になるので、上罫線は先頭の1件だけに付け替える
         &:nth-child(-n + 2) {
           border-top: 1px solid var(--color-font);
           @include f.mq(sp) {
@@ -476,7 +472,6 @@
       color: var(--color-green);
     }
 
-    // 枠の下端で断ち切らず、下のparentsセクションへ流し込む
     .linework {
       top: 81.1rem;
       left: 0;
@@ -568,7 +563,6 @@
       }
     }
 
-    // SPは横組みにして先頭へ回す
     .copy {
       grid-column: 2;
       grid-row: 1 / span 2;
@@ -746,7 +740,6 @@
         padding: 2.4rem 2.4rem 3.2rem;
       }
 
-      // 矢印は疑似要素なので .js-stagger の対象外。カードに続けて出す
       &::before,
       &::after {
         content: "";
@@ -797,7 +790,6 @@
         }
       }
 
-      // SPは縦積みになるので、矢印を挟む順に並べ替える
       li:nth-child(1) {
         @include f.mq(sp) {
           order: 1;
@@ -886,7 +878,6 @@
         margin-top: 3.2rem;
       }
 
-      // SPは番号の右に見出しを並べ、説明文は下段で全幅
       li {
         display: grid;
         align-content: center;
@@ -909,7 +900,6 @@
         line-height: 1.4;
       }
 
-      // 見出しと本文は一組として詰める（scheduleのカードと同じ組み方）
       li > p:last-child {
         margin-top: -1.2rem;
         @include f.mq(sp) {
@@ -919,7 +909,6 @@
       }
     }
 
-    // SPは下線をやめて、番号と見出しを分ける縦の区切りにする
     .number {
       width: 6.19rem;
       color: var(--color-blue);
@@ -967,7 +956,6 @@
       color: var(--color-pink);
     }
 
-    // 見出しと一覧ボタンを1行目に並べ、記事一覧は2行目で全幅
     .common-inner {
       display: grid;
       grid-template-columns: auto auto;
@@ -979,7 +967,6 @@
         grid-template-columns: 1fr;
       }
 
-      // SPはボタンをセクション末尾に送って中央寄せ
       > .common-btn {
         grid-area: 1 / 2;
         @include f.mq(sp) {
@@ -1054,7 +1041,6 @@
       color: var(--color-pink);
     }
 
-    // 見出しと一覧ボタンを1行目に並べ、質問リストは2行目で全幅
     .common-inner {
       display: grid;
       grid-template-columns: auto auto;
@@ -1066,7 +1052,6 @@
         grid-template-columns: 1fr;
       }
 
-      // SPはボタンをセクション末尾に送って中央寄せ
       > .common-btn {
         grid-area: 1 / 2;
         @include f.mq(sp) {
@@ -1201,28 +1186,13 @@
     background: #fff;
   }
 
-  // ベージュ地のセクションの下端を波形に見せる。
-  // 高さは固定（画面幅で伸ばすと次セクションの見出しに掛かるため）で、横だけ伸ばす。
-  // 波形は下に白いセクションが続くことが前提。後ろもベージュだと波形は見えないまま
-  // 次の見出しを塗りつぶしてしまうので、白セクションが隣にあるときだけ出す
   .scholarship:has(+ .support),
   .apply:has(+ .news) {
-    // SPは画面に対して波形が大きくなりすぎるため浅くする
     &::after {
-      content: "";
-      position: absolute;
-      inset: auto 0 -13.26rem;
-      height: 13.26rem;
-      background: url("../images/common/wave.svg") no-repeat center top / 100% 70%;
-      @include f.mq(sp) {
-        inset: auto 0 -6rem;
-        height: 6rem;
-        background-size: 100% 50%;
-      }
+      @include modules.wave;
     }
   }
 
-  // 波形が下の白いセクションより前面にくるようにする
   .scholarship {
     position: relative;
     z-index: 1;

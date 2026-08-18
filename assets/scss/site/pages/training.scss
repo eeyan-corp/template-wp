@@ -1,0 +1,603 @@
+@use "../../base/shortcut-functions" as f;
+@use "../modules" as modules;
+
+#training {
+  main {
+    background: var(--color-base);
+  }
+
+  .fv {
+    padding-block: 11.9rem 18.2rem;
+    @include f.mq(sp) {
+      padding-block: 9.6rem 8rem;
+    }
+  }
+
+  .intro {
+    position: relative;
+    z-index: 1;
+    margin-top: -15rem;
+    padding-bottom: 4rem;
+    @include f.mq(sp) {
+      margin-top: -5.6rem;
+    }
+
+    &::after {
+      @include modules.wave;
+    }
+
+    img {
+      border-radius: 3.2rem;
+      aspect-ratio: 960 / 301;
+      object-fit: cover;
+      object-position: center 61%;
+      @include f.mq(sp) {
+        border-radius: 1.6rem;
+        aspect-ratio: 16 / 9;
+        object-position: center;
+      }
+    }
+
+    h1 {
+      display: grid;
+      justify-items: start;
+      gap: 1.6rem;
+      margin-top: 4rem;
+      color: var(--color-main);
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.15em;
+      @include f.mq(sp) {
+        gap: 0.8rem;
+        margin-top: 2.4rem;
+        font-size: 2.4rem;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    .lead {
+      margin-top: 3.2rem;
+      max-width: 80rem;
+      line-height: 2.5;
+      @include f.mq(sp) {
+        margin-top: 2rem;
+        line-height: 2;
+      }
+    }
+  }
+
+  .program {
+    position: relative;
+    background: #fff;
+    padding-block: 16rem 8rem;
+    @include f.mq(sp) {
+      padding-block: 10rem 6.4rem;
+    }
+
+    .linework {
+      top: 72.3rem;
+      left: 0;
+      width: 100%;
+      aspect-ratio: 1280 / 191;
+    }
+
+    > :not(.linework) {
+      position: relative;
+    }
+
+    .common-label {
+      color: var(--color-yellow);
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: 3.1rem 1fr;
+      align-items: start;
+      gap: 6.2rem;
+      margin-top: 2.4rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 3.2rem;
+      }
+    }
+
+    .copy {
+      writing-mode: vertical-rl;
+      margin: 0 -0.85rem; // 縦組みの行ボックス4.8remをカンプの枠幅3.1remに中央合わせ（縦書きでは margin-inline が縦方向になるため物理指定）
+      color: var(--color-yellow);
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.2em;
+      @include f.mq(sp) {
+        writing-mode: horizontal-tb;
+        margin: 0;
+        font-size: 2.6rem;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: start;
+      gap: 2.4rem;
+      margin-top: 8rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 4rem;
+        margin-top: 0;
+      }
+
+      li {
+        display: grid;
+        gap: 2.4rem;
+        @include f.mq(sp) {
+          gap: 1.6rem;
+        }
+
+        &:nth-child(2) {
+          margin-top: 4.8rem;
+          @include f.mq(sp) {
+            margin-top: 0;
+          }
+        }
+
+        &:nth-child(3) {
+          margin-top: 9.6rem;
+          @include f.mq(sp) {
+            margin-top: 0;
+          }
+        }
+      }
+
+      img {
+        border-radius: 0.8rem;
+        aspect-ratio: 273 / 189;
+        object-fit: cover;
+      }
+
+      // カンプでは3枚目だけ右端に寄せてトリミングされている
+      li:last-child img {
+        object-position: right;
+      }
+
+      .text {
+        display: grid;
+        justify-items: start;
+        gap: 0.8rem;
+      }
+
+      .number {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        gap: 0.4rem;
+        border: 1px solid var(--color-yellow);
+        border-radius: 0.4rem;
+        background: #fff;
+        padding-inline: 0.8rem;
+        color: var(--color-yellow);
+        font-family: var(--font-zen-kaku);
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1.2;
+
+        span {
+          padding-bottom: 0.2rem;
+          width: 3rem;
+          text-align: center;
+          font-size: 2.8rem;
+        }
+      }
+
+      h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+        @include f.mq(sp) {
+          background: var(--color-yellow);
+          padding: 0.4rem;
+          color: #fff;
+        }
+      }
+
+      // カンプの2段組みはPCのみ。SPは幅に余裕があるのでh3側の帯にまとめて1行で流す
+      h3 span {
+        display: block;
+        width: fit-content;
+        background: var(--color-yellow);
+        padding: 0.4rem;
+        color: #fff;
+        @include f.mq(sp) {
+          display: inline;
+          background: none;
+          padding: 0;
+        }
+      }
+
+      p {
+        font-size: 1.4rem;
+        line-height: 1.6;
+      }
+    }
+
+    .column {
+      display: grid;
+      grid-template-columns: 25.6rem 1fr;
+      align-items: center;
+      gap: 3.2rem;
+      border-radius: 6.4rem;
+      background: linear-gradient(90deg, #ffc675 0%, #f8f4c3 100%);
+      margin-top: 4.8rem;
+      padding: 4.8rem 6.4rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 2.4rem;
+        border-radius: 3.2rem;
+        margin-top: 4rem;
+        padding: 3.2rem 2.4rem;
+      }
+
+      img {
+        border-radius: 0.8rem;
+        aspect-ratio: 1;
+        object-fit: cover;
+        object-position: 9% center; // カンプのトリミング位置
+        @include f.mq(sp) {
+          aspect-ratio: 16 / 9;
+        }
+      }
+
+      .text {
+        display: grid;
+        gap: 2.4rem;
+        @include f.mq(sp) {
+          gap: 1.6rem;
+        }
+      }
+
+      h3 {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: start;
+        align-items: center;
+        gap: 1.6rem;
+        font-size: 2.4rem;
+        font-weight: 500;
+        line-height: 1.6;
+        @include f.mq(sp) {
+          grid-auto-flow: row;
+          justify-items: start;
+          gap: 0.8rem;
+          font-size: 1.8rem;
+        }
+      }
+
+      .tag {
+        border-radius: 0.4rem;
+        background: var(--color-base);
+        padding: 0.2rem 0.4rem;
+        font-family: var(--font-zen-kaku);
+        font-size: 1.4rem;
+        font-weight: 900;
+        line-height: normal;
+      }
+
+      .detail {
+        display: grid;
+        gap: 1.2rem;
+        line-height: 1.5;
+        @include f.mq(sp) {
+          line-height: 1.7;
+        }
+      }
+
+      .subject {
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+        @include f.mq(sp) {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+
+  .overview {
+    background: linear-gradient(180deg, #fff 0%, var(--color-base) 100%);
+
+    .card {
+      border-radius: 6.4rem;
+      background: linear-gradient(180deg, rgb(173 228 248 / 0.4) 0%, rgb(195 208 248 / 0.4) 100%), #fff;
+      width: min(128rem, 100%);
+      margin-inline: auto;
+      padding-block: 8rem;
+      @include f.mq(sp) {
+        border-radius: 3.2rem;
+        padding-block: 5.6rem;
+      }
+    }
+
+    .common-label {
+      color: var(--color-sky);
+    }
+
+    .common-inner {
+      margin-top: 4.8rem;
+      @include f.mq(sp) {
+        margin-top: 3.2rem;
+      }
+    }
+
+    .head {
+      display: grid;
+      grid-template-columns: 1fr 3.1rem;
+      align-items: start;
+      gap: 12rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 2.4rem;
+      }
+    }
+
+    dl {
+      display: grid;
+      gap: 1.6rem;
+      padding-top: 8rem;
+      @include f.mq(sp) {
+        padding-top: 0;
+      }
+
+      div {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 0.4rem;
+        border-bottom: 1px solid var(--color-font);
+        padding-bottom: 1.6rem;
+        @include f.mq(sp) {
+          grid-template-columns: auto;
+          gap: 0.4rem 0;
+          padding-bottom: 1.2rem;
+        }
+      }
+    }
+
+    dt {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      @include f.mq(sp) {
+        font-size: 1.7rem;
+      }
+    }
+
+    .copy {
+      writing-mode: vertical-rl;
+      margin: 0 -1.33rem; // 縦組みの行ボックス5.76remをカンプの枠幅3.1remに中央合わせ（縦書きでは margin-inline が縦方向になるため物理指定）
+      color: var(--color-sky);
+      font-size: 4.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.2em;
+      @include f.mq(sp) {
+        order: -1;
+        writing-mode: horizontal-tb;
+        margin: 0;
+        font-size: 2.8rem;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    .goal {
+      display: grid;
+      justify-items: start;
+      gap: 1.6rem;
+      border-radius: 0.8rem;
+      background: #fff;
+      margin-top: 6.4rem;
+      padding: 3.2rem 3.2rem 4rem;
+      @include f.mq(sp) {
+        gap: 1.2rem;
+        margin-top: 4rem;
+        padding: 2.4rem 2rem 3.2rem;
+      }
+
+      .tag {
+        border-radius: 0.4rem;
+        background: var(--color-sky);
+        padding: 0.4rem 0.8rem;
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+        @include f.mq(sp) {
+          font-size: 1.6rem;
+        }
+      }
+
+      h3 {
+        font-size: 2.4rem;
+        font-weight: 500;
+        line-height: 1.6;
+        @include f.mq(sp) {
+          font-size: 1.9rem;
+        }
+      }
+    }
+  }
+
+  .flow {
+    position: relative;
+    padding-block: 8rem;
+    @include f.mq(sp) {
+      padding-block: 6.4rem;
+    }
+
+    .linework {
+      top: 16rem;
+      left: 0;
+      width: 100%;
+      aspect-ratio: 1280 / 817;
+      @include f.mq(sp) {
+        top: 20rem;
+      }
+    }
+
+    > section {
+      position: relative;
+    }
+
+    .common-label {
+      color: var(--color-blue);
+    }
+
+    h2 {
+      margin-top: 2.4rem;
+      color: var(--color-blue);
+    }
+  }
+
+  .steps {
+    .lead {
+      margin-top: 6.4rem;
+      max-width: 80rem;
+      line-height: 2.5;
+      @include f.mq(sp) {
+        margin-top: 3.2rem;
+        line-height: 2;
+      }
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.4rem;
+      margin-top: 6.4rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        margin-top: 4rem;
+      }
+
+      li {
+        display: grid;
+        grid-template-columns: 3.9rem 1fr;
+        align-content: start;
+        align-items: center;
+        gap: 2.4rem 3.2rem;
+        border: 2px solid var(--color-blue);
+        border-radius: 0.8rem;
+        background: #fff;
+        padding: 2.4rem 2.4rem 3.2rem;
+        @include f.mq(sp) {
+          gap: 1.6rem 2.4rem;
+          padding: 2rem 2rem 2.4rem;
+        }
+      }
+
+      .number {
+        display: grid;
+        justify-items: center;
+        color: var(--color-blue);
+        font-family: var(--font-zen-kaku);
+        font-weight: 700;
+        line-height: 1.2;
+
+        span:first-child {
+          margin-bottom: -1rem;
+          font-size: 1.4rem;
+        }
+
+        span:last-child {
+          display: grid;
+          place-content: center;
+          border-bottom: 1px solid currentColor;
+          height: 4.9rem;
+          font-size: 4rem;
+          letter-spacing: 0.1em;
+        }
+      }
+
+      li > p:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  .schedule {
+    margin-top: 12rem;
+    @include f.mq(sp) {
+      margin-top: 8rem;
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3.1525rem;
+      margin-top: 8rem;
+      @include f.mq(sp) {
+        grid-template-columns: auto;
+        gap: 4rem;
+        margin-top: 4rem;
+      }
+
+      li {
+        display: grid;
+        align-content: start;
+        gap: 2.4rem;
+        position: relative;
+        border: 2px solid var(--color-blue);
+        border-radius: 0.8rem;
+        background: #fff;
+        padding: 2.4rem 1.2rem;
+        @include f.mq(sp) {
+          gap: 1.6rem;
+          padding: 2rem 1.6rem;
+        }
+
+        &:not(:last-child)::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 100%;
+          translate: 0 -50%;
+          margin-left: 0.8rem;
+          width: 1.5525rem;
+          height: 2.4865rem;
+          background: url("../images/top/schedule-arrow.svg") no-repeat center / contain;
+          @include f.mq(sp) {
+            top: 100%;
+            left: 50%;
+            translate: -50% 0;
+            margin: 0.8rem 0 0;
+            rotate: 90deg;
+          }
+        }
+      }
+
+      .date {
+        border-radius: 0.4rem;
+        background: var(--color-base);
+        padding-block: 0.2rem;
+        text-align: center;
+      }
+
+      .text {
+        display: grid;
+        gap: 1.2rem;
+
+        h3 {
+          font-size: 1.6rem;
+          font-weight: 700;
+        }
+
+        p {
+          font-size: 1.4rem;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+}

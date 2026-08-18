@@ -16,7 +16,6 @@
     padding: 1.6rem 2rem 0;
   }
 
-  // メニューを開くとオーバーレイが被るので、ロゴも前面に出しておく
   .logo {
     @include f.mq(sp) {
       position: relative;
@@ -42,7 +41,6 @@
       transition: 0.3s ease;
     }
 
-    // .btnにも当たらないよう、文字色のホバーはリスト内のリンクだけに絞る
     ul {
       display: flex;
       align-items: center;
@@ -117,8 +115,6 @@
     }
   }
 
-  // 第1弾公開ではSPの導線を下部の追従バーに集約するため出さない。
-  // メニューを復活させるときはsp側で display: grid に戻す
   .menu-btn {
     display: none;
     place-content: center;
@@ -126,8 +122,10 @@
     z-index: 2;
     width: 4.4rem;
     height: 4.4rem;
+    @include f.mq(sp) {
+      display: grid;
+    }
 
-    // 3本を同じセルに重ねる。×にしたとき同じ中心で交差させるため
     span,
     &::before,
     &::after {
@@ -193,12 +191,11 @@ body.fixed .site-header {
   right: calc(var(--slide) * -1);
   z-index: 10;
   visibility: hidden;
-  translate: 100% 0; // FVが見えている間は画面右外に逃がす
+  translate: 100% 0;
   transition:
     translate 0.4s ease,
     visibility 0.4s;
 
-  // SPは画面下に張り付く2列のバー。せり出しは効かないので--slideを殺す
   @include f.mq(sp) {
     --slide: 0;
     grid-template-columns: 1fr 1fr;

@@ -10,14 +10,14 @@ namespace {
     add_theme_support("title-tag");
   });
 
-  // 公開フェーズの管理。第1弾はTOP・エントリー・お問い合わせ・プライバシーポリシーのみ公開する。
-  // ページを追加公開するときはここをtrueに戻せば、導線とニュース投稿タイプがまとめて復活する
+  // 公開フェーズの管理。falseにすると該当ページへの導線（ヘッダー・フッター・TOP）と
+  // ニュース投稿タイプのフロント公開がまとめて止まる
   const LAUNCHED = [
-    "training" => false, // ビジネス研修について
-    "parents"  => false, // 保護者様へ
-    "about"    => false, // 運営者情報
-    "faq"      => false, // よくあるご質問
-    "news"     => false, // 新着情報
+    "training" => true, // ビジネス研修について
+    "parents"  => true, // 保護者様へ
+    "about"    => true, // 運営者情報
+    "faq"      => true, // よくあるご質問
+    "news"     => true, // 新着情報
   ];
 
   function launched($key) {
