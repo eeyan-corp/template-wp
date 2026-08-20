@@ -4,26 +4,6 @@ namespace {
   require_once __DIR__ . "/inc/admin.php";       // 管理画面カスタマイズ
   require_once __DIR__ . "/inc/post-types.php";  // カスタム投稿タイプ
 
-  // titleタグの出力をWordPress（＝Yoast SEO）に任せる。
-  // この宣言が無いとYoastがtitleを出力できず、全ページでtitleが欠落する
-  add_action("after_setup_theme", function () {
-    add_theme_support("title-tag");
-  });
-
-  // 公開フェーズの管理。falseにすると該当ページへの導線（ヘッダー・フッター・TOP）と
-  // ニュース投稿タイプのフロント公開がまとめて止まる
-  const LAUNCHED = [
-    "training" => true, // ビジネス研修について
-    "parents"  => true, // 保護者様へ
-    "about"    => true, // 運営者情報
-    "faq"      => true, // よくあるご質問
-    "news"     => true, // 新着情報
-  ];
-
-  function launched($key) {
-    return LAUNCHED[$key] ?? false;
-  }
-
   // 配列・オブジェクトの値を安全に取得
   function el($o, $k, $d=null){
     if(is_array($o)){

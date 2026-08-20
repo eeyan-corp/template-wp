@@ -1,9 +1,0 @@
-@use "./hover" as *;
-
-@mixin gradient-hover {
-  background: var(--gradient-red-slide) 100% 0 / 200% 100%;
-
-  @include hover {
-    background-position: 0 0;
-  }
-}
