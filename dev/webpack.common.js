@@ -1,4 +1,5 @@
 const path = require("path"); // pathモジュールの読み込み
+const fs = require("fs");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -7,17 +8,41 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 // 本番環境のときはsoucemapを出力させない設定
 const enabledSourceMap = process.env.NODE_ENV !== "production";
 
+// コンパイル対象の候補。存在するものを上から順に採用するので、
+// SCSSを使わない案件で assets/scss を消してもビルドが落ちない。
+// clean は「出力先(assets/css)にソースがあるか」で切り替える
+const sourceCandidates = [
+  // SCSS案件：assets/cssは生成物だけなので毎回クリーンにしてよい
+  { entry: "assets/scss/styles.scss", clean: true },
+  // 素のCSS案件：ソースがassets/css内にあるため、クリーンすると消えてしまう
+  { entry: "assets/css/styles.src.css", clean: false },
+];
+
+const source = sourceCandidates
+  .map((candidate) => ({
+    ...candidate,
+    path: path.resolve(__dirname, "..", candidate.entry),
+  }))
+  .find((candidate) => fs.existsSync(candidate.path));
+
+if (!source) {
+  throw new Error(
+    "コンパイル対象が見つかりません。次のいずれかを用意してください：\n  " +
+      sourceCandidates.map((candidate) => candidate.entry).join("\n  ")
+  );
+}
+
 module.exports = {
   // エントリーポイントの設定
   entry: {
-    // コンパイル対象のファイルを指定
-    styles: path.resolve(__dirname, "../assets/scss/styles.scss"),
+    // コンパイル対象のファイル（SCSSが無ければ素のCSSにフォールバック）
+    styles: source.path,
   },
-  // sassのコンパイル先フォルダを指定
+  // コンパイル先フォルダを指定
   output: {
     path: path.resolve(__dirname, "../assets/css"),
     //ファイルを出力する前にディレクトリをクリーンアップ
-    clean: true,
+    clean: source.clean,
     // ソースマップ内のソースパスを実ファイルの絶対パスにする（DevToolsで正しく辿れる）
     devtoolModuleFilenameTemplate: "[absolute-resource-path]",
   },
