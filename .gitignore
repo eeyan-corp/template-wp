@@ -1,7 +1,8 @@
 node_modules
 .DS_Store
 .vscode
-assets/css/
+assets/css/styles.css
+assets/css/styles.css.map
 wp/wp-admin/
 wp/wp-includes/
 wp/*.php
